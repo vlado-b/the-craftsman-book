@@ -1,0 +1,446 @@
+
+
+
+<!DOCTYPE html><!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" xsl="http://www.w3.org/1999/XSL/Transform xmlns:fb="http://www.facebook.com/2008/fbml""><![endif]--><!--[if IE 7]><html class="no-js lt-ie9 lt-ie8" xsl="http://www.w3.org/1999/XSL/Transform xmlns:fb="http://www.facebook.com/2008/fbml""> <![endif]--><!--[if IE 8]><html class="no-js lt-ie9" xsl="http://www.w3.org/1999/XSL/Transform" xmlns:fb="http://www.facebook.com/2008/fbml"><![endif]--><!--[if gt IE 8]><!--><html class="no-js" xsl="http://www.w3.org/1999/XSL/Transform" xmlns:fb="http://www.facebook.com/2008/fbml"><!--<![endif]--><head><meta name="verify-v1" content="jKqgZt8qtZUt+IrazV2fydKUZG2KKR8QEUoYjH9tth4=" /><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" /><title>Robert C. Martin's Clean Code Tip of the Week #8: Your Build Shouldn't Require More Than One Step | Robert C. Martin's Clean Code Tip of the Week #8: Your Build Shouldn't Require More Than One Step | InformIT</title><link href="/display/common/css/commonAll.css?v=20131104" rel="stylesheet" type="text/css" /><link href="/display/common/css/commonFront.css?v=20131104" rel="stylesheet" type="text/css" /><link href="/display/common/css/jquery-ui-custom.css?v=20131104" rel="stylesheet" type="text/css" /><link href="/display/InformIT/css/style.css?v=20131104" rel="stylesheet" type="text/css" /><link rel="apple-touch-icon-precomposed" sizes="144x144" href="/display/InformIT/images/objects/touch_icons/apple-touch-icon-144x144-precomposed.png" /><link rel="apple-touch-icon-precomposed" sizes="114x114" href="/display/InformIT/images/objects/touch_icons/apple-touch-icon-114x114-precomposed.png" /><link rel="apple-touch-icon-precomposed" sizes="72x72" href="/display/InformIT/images/objects/touch_icons/apple-touch-icon-72x72-precomposed.png" /><link rel="apple-touch-icon-precomposed" href="/display/InformIT/images/objects/touch_icons/apple-touch-icon-precomposed.png" /><script language="JavaScript" src="/display/common/javascript/modernizr.custom.js?v=20131104" type="text/javascript"></script><script language="JavaScript" src="/display/common/javascript/jquery.js?v=20131104" type="text/JavaScript"></script><script language="JavaScript" src="/display/common/javascript/global.js?v=20131104" type="text/JavaScript"></script><!--[if lte IE 8]><script language="JavaScript" src="/display/common/javascript/respond.min.js" type="text/JavaScript"></script><![endif]--><script language="JavaScript" src="/display/common/javascript/swfobject.js" type="text/JavaScript"></script><script language="JavaScript" src="/display/common/javascript/jquery-ui-1.10.2.custom.min.js" type="text/JavaScript"></script><script language="JavaScript" src="/display/common/javascript/fastclick.min.js" type="text/JavaScript"></script><link rel="canonical" href="http://www.informit.com/articles/article.aspx?p=1350506" />
+      
+      
+    
+        <meta name="pageType" content="Articles and Sample Chapters" />
+      <meta name="publishedDate" content="May 16, 2009" />
+        <meta name="description" content="We join &quot;The Craftsman,&quot; Robert C. Martin&#39;s series on an interstellar spacecraft where programmers hone their coding skills. In this eighth tip in the series, the crewmen learn that building a project should be a single trivial operation. " />
+      
+        
+        
+    <link rel="shortcut icon" href="/display/InformIT/images/objects/favicon.ico?v=20131104" />
+        <meta name="WT.si_n" content="Site_Funnel"/>
+<meta name="WT.si_p" content="Article"/>
+<meta name="DCSext.w_ptgarctlnm" content="Robert C. Martin's Clean Code Tip of the Week #8: Your Build Shouldn't Require More Than One Step"/>
+<meta name="DCSext.w_ptgarctlpg" content="1_Robert C. Martin's Clean Code Tip of the Week #8: Your Build Shouldn't Require More Than One Step"/>
+<meta name="WT.ad" content="Home > Articles > Programming > Windows Programming"/>
+
+      </head><body class=""><div class="wrapper">
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(document).bind('click', function (e) {
+            var $clicked = $(e.target);
+            if ($clicked.is('#articleTOC') || $clicked.parents().is('#articleTOC')) {
+                $('#articleTOCList').show();
+            }
+            else {
+                hideTOC();
+            }
+        });
+    });
+
+    function hideTOC() {
+        $('#articleTOCList').hide();
+    }
+</script>
+
+<div id="content" class="articleProduct">
+    <div id="columnOne">
+<p class="crumb">
+            <a href="/index.aspx">Home</a>
+            &gt;
+            <a href="/articles/index.aspx">Articles</a>
+            &gt;
+            <a href="/articles/index.aspx?st=60206">Programming</a>
+            &gt;
+            <a href="/articles/index.aspx?st=60220">Windows Programming</a>
+</p>
+        <div id="articleContent" class="clearfix">
+            <div id="articleHeader" class="sectionHeader">
+                    <h1>Robert C. Martin&#39;s Clean Code Tip of the Week #8: Your Build Shouldn&#39;t Require More Than One Step</h1>
+                <a rel="author" href="/authors/bio.aspx?a=361a5e70-f1e2-432b-9928-b30b4742ae80"><img src="http://ptgmedia.pearsoncmg.com/authors/m/martin_robert_c/martin_robert_c_e.jpg" alt="Robert C. Martin" class="author" /></a>                <ul>
+                        <li class="authorName"> By <a rel="author" href="/authors/bio.aspx?a=361a5e70-f1e2-432b-9928-b30b4742ae80">Robert C. Martin</a></li>
+                    <li>May 16, 2009</li>
+                </ul>
+            </div>
+            <div class="articleTools">
+                <div class="articleInteraction">
+                    <ul>
+                        <li>
+                            <a href="/articles/printerfriendly.aspx?p=1350506" title="Print"><img src="/display/InformIT/images/icons/print_16.png" alt="Print" /></a> <a href="/articles/printerfriendly.aspx?p=1350506" title="Print"><span>Print</span></a>
+                        </li>
+                        <li>
+
+<script type="text/javascript">
+    addthis_pub = 'informit';
+    addthis_logo = 'http://www.informit.com/display/InformIT/images/header/informit.png';
+    addthis_logo_background = '596770';
+    addthis_logo_color = '596770';
+    addthis_brand = 'informIT';
+    addthis_options = 'email, delicious, digg, facebook, google, newsvine, reddit, slashdot, stumbleupon, technorati, twitter, more';
+</script>
+<a href="http://www.addthis.com/bookmark.php" onmouseover="return addthis_open(this, '', '[URL]', '[TITLE]')" onmouseout="addthis_close()" onclick="return addthis_sendto()"><img src="/display/InformIT/images/icons/share_16.png" width="16" height="16" border="0" alt="Share This" /></a><a href="http://www.addthis.com/bookmark.php" onmouseover="return addthis_open(this, '', '[URL]', '[TITLE]')" onmouseout="addthis_close()" onclick="return addthis_sendto()"><span>Share This</span></a>
+<script type="text/javascript" src="http://s7.addthis.com/js/152/addthis_widget.js"></script>
+                        </li>
+                        <li class="last">
+                                <a href="#articleDiscussion" title="Discuss"><img src="/display/InformIT/images/icons/discuss_16.png" alt="Discuss" /></a><a href="#articleDiscussion" title="Discuss"><span>Discuss</span></a>
+                        </li>
+                    </ul>
+                </div>
+                    <div class="pagination">
+        <span class="paginationLocation"><strong>Page 1</strong> of 1</span>
+    </div>
+
+            </div>
+            <div id="articleText">
+                    <div class="relatedBook">
+                        <div class="header graydient">
+                            <h3>From the author of</h3>
+                        </div>
+                        <div class="productArea graydient clearfix">
+                            <a href="/store/clean-code-a-handbook-of-agile-software-craftsmanship-9780132350884?w_ptgrevartcl=Robert+C.+Martin%27s+Clean+Code+Tip+of+the+Week+%238%3a+Your+Build+Shouldn%27t+Require+More+Than+One+Step_1350506"><img src="/ShowCover.aspx?isbn=9780132350884&amp;type=d" alt="Clean Code: A Handbook of Agile Software Craftsmanship" class="product" /></a><a href="/store/clean-code-a-handbook-of-agile-software-craftsmanship-9780132350884?w_ptgrevartcl=Robert+C.+Martin%27s+Clean+Code+Tip+of+the+Week+%238%3a+Your+Build+Shouldn%27t+Require+More+Than+One+Step_1350506" class="title">Clean Code: A Handbook of Agile Software Craftsmanship</a>
+                            <br />
+                            <br />
+                            <a href="/store/clean-code-a-handbook-of-agile-software-craftsmanship-9780132350884?w_ptgrevartcl=Robert+C.+Martin%27s+Clean+Code+Tip+of+the+Week+%238%3a+Your+Build+Shouldn%27t+Require+More+Than+One+Step_1350506" class="button">Learn More</a>
+                                <a href="/buy.aspx?isbn=9780132350884&w_ptgrevartcl=Robert+C.+Martin%27s+Clean+Code+Tip+of+the+Week+%238%3a+Your+Build+Shouldn%27t+Require+More+Than+One+Step_1350506" class="buy button"><span class="ss-icon">&#xE500;</span>Buy</a>
+                        </div>
+                    </div>
+                                    <div id="articleLongDescription">We join "The Craftsman," Robert C. Martin's series on an interstellar spacecraft where programmers hone their coding skills. In this eighth tip in the series, the crewmen learn that building a project should be a single trivial operation. </div>
+                    <div id="articleDescription"><p><strong>You can review additional articles from Robert C. Martin's series, "The Craftsman," on the <a href="http://www.objectmentor.com/resources/publishedArticles.html">ObjectMentor website</a>.</strong></p></div>
+                <p><em>57 July 4, 1945, 22:23:00 GMT</em></p>
+<p><em>Chuck Yeager stared out the portal at the growing giant.  Clyde was still 100 kilometers away, but it filled his field of view.  It was a dark grey pockmarked potato slowly rotating while hanging silently in the sky.  Chuck would be one of the first to set foot on Clyde, to gather material to bring home to the egg-heads who desperately wanted to know what it was made of.</em></p>
+<p><em>&#8220;They think we can move that thing.&#8221; O&#8217;Hare said from behind him. </em></p>
+<p><em>Yeager knew better than to show that he&#8217;d been startled.  &#8220;That&#8217;s what they think, alright.&#8221; He responded.</em></p>
+
+<p><em>&#8220;What do you think?&#8221; Pressed O&#8217;Hare.  &#8220;Do you think we can push this thing aside?&#8221;</em></p>
+<p><em>&#8220;Butch,&#8221; Drawled Yeager, &#8220;I&#8217;ll be damned if I know.  But here&#8217;s the thing.&#8221;</em></p>
+<p><em>&#8220;What&#8217;s that, Chuck?&#8221;</em></p>
+<p><em>&#8220;It&#8217;s not my job to worry about that.  Not yours neither.&#8221;</em></p>
+
+<p><em>&#8220;True enough.  True enough.  We&#8217;re just supposed to walk all over that sunofabitch and pick up rocks to bring home.&#8221;</em></p>
+<p><em>&#8220;Sounds easy, don&#8217;t it?&#8221;</em></p>
+<p><em>&#8220;Piece of cake.&#8221;</em></p>
+<p><em>And they both turned and stared at the dark grey pockmarked potato that was rushing headlong to destroy their homes.</em></p>
+<p></p>
+
+<hr>
+
+<p><em>Wed, 14 Mar 2002, 08:43</em></p>
+
+<p>I heard an email come into my PDA while I was eating breakfast in the galley, but I ignored it until I had finished.  I got up and started down the corridor to the lift that would take me to my work area.  As I was walking I flipped open the PDA and started to scan the emails.  </p>
+
+<tt>
+From:  Jerry <br />
+Subject: PortalClean<br />
+Date: 14 Mar, 2002, 08:32<br />
+To: Alphonse<br />
+----------------------------<br />
+Alphonse,
+&#160;<br /><br />
+Please check out the PortalClean system, rebuild with latest compiler, and redeploy.
+&#160;<br /><br />
+Jerry.<br /><br />
+</tt>
+<p>I was reading as I turned into the lift.  I walked headlong into Jasmine.  </p>
+<p>&#8220;Hey, watch where you&#8217;re going there Hot Shot!  Get your nose out of your PDA while you&#8217;re walking!&#8221;</p>
+<p>&#8220;Oh, sorry Jasmine.&#8221;</p>
+<p>&#8220;You <em>will</em> be sorry if you keep that up.  Haven&#8217;t you ever heard of the Discipline of D.E.?&#8221;</p>
+
+<p>&#8220;Uh...what?&#8221;  I hate sounding like a lunk, but the sounds come out before I can stop them.</p>
+<p>Jasimine rolled those glorious green eyes and tossed her long black hair.  &#8220;The Discipline of D.E., Alphonse.  Do Easily.&#8221;</p>
+<p>&#8220;N-no I&#8217;ve never heard of that.&#8221;  </p>
+<p>The lift engaged and we stated down towards our lab.</p>
+<p>&#8220;The basic idea is that it&#8217;s better to think about what you are doing, than it is to do one thing while thinking about another.  When you are walking, think about walking.  When you are eating, think about eating.  You make fewer mistakes that way.  Or so they tell me.&#8221;</p>
+<p>The lift door opened just as she finished.</p>
+
+<p>She gave me a wink and an all-knowing grin, and strode purposefully out into the lab with her hair swinging purposefully with each stride.</p>
+<p>I heaved a sigh and made my way to my workstation.  Avery was there already.</p>
+<p>&#8220;All set for some pairing?&#8221; He asked.  &#8220;I could use a break from what Jean&#8217;s got me doing.  So I thought I&#8217;d help you out for a bit.&#8221;</p>
+<p>&#8220;Sure.&#8221; I said with some relief.  It would be good to have a bit of help with this PortalClean thing.  &#8220;Jerry just sent me this email.&#8221; I held my PDA out for him to see.</p>
+
+<p>&#8220;Okay, that&#8217;s sounds easy.&#8221; He said.  And while I settled myself, he checked out the project and got it up on the screen.</p>
+<p>We both stared at the top-level directory for a few seconds.  Then, in unison, we turned to look at each other, and said: &#8220;Where&#8217;s the build script?&#8221;  We laughed at our simultaneity, and I resisted the urge to say &#8220;Jinx&#8221;.  </p>
+<p>&#8220;Okay.&#8221; I said.  &#8220;How do we build this thing?&#8221;</p>
+
+<p>We both stared at the directory a bit longer, but all was saw were source files.  There didn&#8217;t seem to be any kind of script at all.  </p>
+<p>&#8220;Wow, this is strange.  I wonder who wrote this?&#8221;</p>
+<p>Avery nodded and typed: git log.  </p>
+<p>As the list of commits scrolled up the screen, Avery and I both sighed.  Again, simultaneously we looked at each other and with as much apprehension as we could muster we said the name: &#8220;Jasper!&#8221;</p>
+<p>Again, we laughed, although this time there wasn&#8217;t as much to laugh about.  </p>
+<p>&#8220;Do you want to call him over?&#8221; Avery asked.</p>
+
+<p>I paused to think about this.  &#8220;No.&#8221; I said. &#8220;But I think we have to.&#8221;</p>
+<p>Avery rolled his eyes in agreement, and then fired off an IM.</p>
+
+<PRE>
+	Avery: Jasper, got a sec?
+	Jasper: Sure beans!  What&#8217;s up Ayve ol&#8217; sport?
+</PRE>
+<p>We looked at each other again and rolled our eyes.</p>
+
+<PRE>
+	Avery: Alphonse and I could use your help with PortalClean.
+	Jasper: PortalClean!  Holy Baloney, It&#8217;s been years!
+	Jasper: That was one of my first projects.  What a hoot!
+	Jasper: I&#8217;ll be over in a flash guys!  See you in a jiffy.
+	Jasper: Over and out.
+	Jasper: BRT.  
+</PRE>
+<p>Seconds later he was there, in all his blonde, sugar-bowl haircut, toothy-smiled glory. </p>
+<p>&#8220;Hey Alf!  Hey Ayve!  Good to see you guys.  What&#8217;s up with PortalClean?  Wow, It&#8217;s been a while since I&#8217;ve seen that code.  Do you mind if I sit right here?  Thanks.  Yeah, that&#8217;s the directory all right.  So how can I help you?  Have you downloaded the CleanFramework yet?&#8221;</p>
+<p>The rush of syllables ended so abruptly it took me a moment to realize that he was done.  As Jasper beamed at us with his big bright eyes and wide grin, I reviewed the deluge of words. </p>
+
+<p>But Avery beat me to it.  &#8220;What&#8217;s CleanFramework?&#8221;</p>
+<p>&#8220;Good question Ayve!  CleanFramework is the framework &lt;grin&gt; that I wrote to support CleanPortal.  I checked it into a separate repository because I thought someone else might be able to use it for a different cleaning application.  Here, let me show you.&#8221;</p>
+<p>And Jasper grabbed the keyboard and checked out the CleanFramework project right in the same directory with CleanPortal.  </p>
+<p>Jasper stared at the screen for a few seconds and then said: &#8220;Yeah, I&#8217;m pretty sure that&#8217;s right.  Now, AlfAndAyve &lt;grin&gt; have you tried building this?  Probably not since you didn&#8217;t have the framework.  So here&#8217;s how you build it.&#8221;  And he began to type. &#8220;First you have to build the framework.&#8221;</p>
+
+<PRE>
+cd CleanFramework
+javac *.java
+</PRE>
+<p>&#8220;What are those errors?&#8221; I said, as I watched the compile fail.</p>
+<p>&#8220;Oh yeah, that&#8217;s right!&#8221; Avery exclaimed.  &#8220;We need the CleanUtils library too.&#8221;  </p>
+<p>And with that he checked out yet another library into the same directory.</p>
+
+<p>&#8220;OK AlfAndAyve &lt;grin&gt; let&#8217;s try that again.  First we build the utils.&#8221;</p>
+
+<PRE>
+cd CleanUtils
+javac *.java
+</PRE>
+<p>&#8220;Next we build the Framework.&#8221;</p>
+
+<PRE>
+cd ../CleanFramework
+javac &#8211;classpath ../CleanUtils/classes *.java
+</PRE>
+
+<p>&#8220;Finally we build the application.&#8221;  And he beamed great big smiles at both of us.</p>
+
+<PRE>
+cd ..
+javac &#8211;classpath CleanUtils/classes;CleanFramework/classes *.java
+</PRE>
+<p>&#8220;Whoops! More errors. Hmmm. Let me think.&#8221;  </p>
+<p>Jasper looked up at the ceiling and put his finger on his nose.  Avery and I looked at each other in horror. </p>
+<p>&#8220;Oh yeah!&#8221; Jasper said. &#8220;I forgot to generate the data structures.&#8221;</p>
+
+<PRE>
+java &#8211;cp CleanUtils/classes cleanDataGenerator.Generate data/templates
+... generating 152 java files from templates. (18s)
+</PRE>
+<p>&#8220;OK, now I can build the application.&#8221;</p>
+
+<PRE>
+javac &#8211;classpath CleanUtils/classes;CleanFramework/classes *.java
+</PRE>
+<p>I could feel the blood start to drain from my face. </p>
+<p>&#8220;Jasper, WTF?&#8221;</p>
+<p>&#8220;Wait Alf, hold on.  We&#8217;re not done.&#8221;</p>
+
+<p>&#8220;Not...done?&#8221;</p>
+<p>&#8220;Now we&#8217;ve got to run the configuration parser.&#8221;</p>
+<p>&#8220;The...huh?&#8221;</p>
+
+<PRE>
+java &#8211;cp CleanUtils/classes cleanUtils.GenConfig ../CleanFramework/config.xml
+... populating configuation database.  Please wait... (22s)
+... Binding generated data structure to configuration entities... (14s)
+... Reticulating Splines... (92s)
+</PRE>
+<p>Avery was slowly bumping his forehead against the desk.  His eyes were closed tight.  His hands were over his ears.  </p>
+<p>&#8220;Wow, this machine is a lot faster than we had back when I wrote this.  We usually had to wait for 10 minutes or so!  OK, now let&#8217;s run the tests!&#8221;</p>
+
+<p>Avery and I both perked up at that.  &#8220;You have tests?&#8221;</p>
+<p>Jasper looked offended.  &#8220;Alf?  Ayve?  What do you take me for?  Of course I have tests.  First we have to generate the test database.&#8221;</p>
+
+<PRE>
+java &#8211;cp classes TestDB.build &#8211;nl &#8211;p 32
+...alternating rows with variants selected.
+...populating records with mocks of type n
+...Linking records and leaving 32 broken paths.
+</PRE><p>&#8220;I always left 32 broken paths. Watch what happens when I run the application.&#8221;</p>
+<p>My eyes got big.  &#8220;The Application!&#8221;  But I was too late.  Avery slumped in his seat wracked by mock sobs.</p>
+
+<PRE>
+java &#8211;cp classes CleanPortal.cleanPortal &#8211;t &#8211;v &#8211;log:null &#8211;p:Mock
+******TEST MODE ON*****
+Transverse access applied.
+Mock Portals intialized.
+(2342342)/Portal selection begins.
+(2342346)/Portals selected.
+(2342323)/Portal 1 &#8211; stern @ 359
+(2423523)/Portal 1 &#8211; engaging washers.
+(2349932)/Portal 1 &#8211; washers completed (32s)
+(3930283)/Portal 1 &#8211; Optical Transmission measured (+2%)
+(4342344)/Portal 1 &#8211; Clean.
+(3234222)/Cleaner Clutch engaged - - Translation started.
+...
+
+</PRE>
+<p>I watched agog and aghast as the torrent of log messages scrolled up my screen.  Jasper, with that big grin plastered on his face, stared intently at the screen watching the log messages go by.  His lips were moving but I couldn&#8217;t hear what he was saying.  I felt uncomfortably numb.</p>
+<p>Finally the application terminated.  Jasper leaned back and said:</p>
+<p>&#8220;Yep, I counted 32.  The tests all passed.&#8221;</p>
+<p>Avery and I both stared at Jasper as though he&#8217;s just confessed to murdering our mothers.  </p>
+<p>&#8220;Jasper... frack... Frack!  What the <em>frack</em> was that?  Holy Cecil, that was a complete Cluster Frack.  What...??&#8221;</p>
+<p>Jasper&#8217;s expression changed.  He looked almost like he was gloating.  Then Jerry and Jasmine both popped their head up above neighboring cubicle with big condescending grins on their faces.</p>
+
+<p>&#8220;Oh no!&#8221; Avery said and slouched down in his seat.  </p>
+<p>&#8220;Oh YES you Hot Shots!  We <em>got</em> you!&#8221;</p>
+<p>The three of them walked away laughing and joking with each other.  Avery and I looked at each other, and then burst out laughing too.  &#8220;They got us all right.&#8221;  </p>
+<p>&#8220;Jinx!&#8221;</p>
+<p>***</p>
+
+<p>Later that day I brought up Mr. C&#8217;s rules and started to read.</p>
+<p><strong>E1: Build Requires More Than One Step</strong></p>
+<p>Building a project should be a single trivial operation.  You should not have to check many little pieces out of source code control.  You should not need a sequence of arcane commands or context dependent scripts in order to build the individual elements.  You should not have to search near and far for all the various little extra JARs, XML files, and other artifacts that the system requires.  You should be able to check out the system with one simple command and then issue one other simple command to build it. </p>
+</pre>
+
+
+
+
+            </div>
+            <div class="articleToolsSecond">
+                    <div class="pagination">
+        <span class="paginationLocation"><strong>Page 1</strong> of 1</span>
+    </div>
+
+                <div class="articleInteraction">
+                    <ul>
+                        <li>
+
+<script type="text/javascript">
+    addthis_pub = 'informit';
+    addthis_logo = 'http://www.informit.com/display/InformIT/images/header/informit.png';
+    addthis_logo_background = '596770';
+    addthis_logo_color = '596770';
+    addthis_brand = 'informIT';
+    addthis_options = 'email, delicious, digg, facebook, google, newsvine, reddit, slashdot, stumbleupon, technorati, twitter, more';
+</script>
+<a href="http://www.addthis.com/bookmark.php" onmouseover="return addthis_open(this, '', '[URL]', '[TITLE]')" onmouseout="addthis_close()" onclick="return addthis_sendto()"><img src="/display/InformIT/images/icons/share_16.png" width="16" height="16" border="0" alt="Share This" /></a><a href="http://www.addthis.com/bookmark.php" onmouseover="return addthis_open(this, '', '[URL]', '[TITLE]')" onmouseout="addthis_close()" onclick="return addthis_sendto()"><span>Share This</span></a>
+<script type="text/javascript" src="http://s7.addthis.com/js/152/addthis_widget.js"></script>
+                        </li>
+                        <li class="last">
+                            <a href="#" onclick="openBrWindow('/my_account/addTo.aspx?p=0822726f-e2e9-453a-96b8-0a2e3ae9daea&e=b76ff018-9c08-43a6-a9c8-632f83846ff6&t=a','addMyAccount','scrollbars=no,resizable=yes,width=300,height=200');return false;" title="Your Account"><img class="save" alt="" src="/display/InformIT/images/icons/save_16.png" /></a><a href="#" onclick="openBrWindow('/my_account/addTo.aspx?p=0822726f-e2e9-453a-96b8-0a2e3ae9daea&e=b76ff018-9c08-43a6-a9c8-632f83846ff6&t=a','addMyAccount','scrollbars=no,resizable=yes,width=300,height=200');return false;">Save To Your Account</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+            <div class="relatedBookBottom graydient clearfix">
+                <a href="/store/clean-code-a-handbook-of-agile-software-craftsmanship-9780132350884?w_ptgrevartcl=Robert+C.+Martin%27s+Clean+Code+Tip+of+the+Week+%238%3a+Your+Build+Shouldn%27t+Require+More+Than+One+Step_1350506"><img src="/ShowCover.aspx?isbn=9780132350884&amp;type=e" alt="Clean Code: A Handbook of Agile Software Craftsmanship" class="product" /></a>
+                <h4>From the author of</h4>
+                <p>
+                    <a href="/store/clean-code-a-handbook-of-agile-software-craftsmanship-9780132350884?w_ptgrevartcl=Robert+C.+Martin%27s+Clean+Code+Tip+of+the+Week+%238%3a+Your+Build+Shouldn%27t+Require+More+Than+One+Step_1350506" class="title">Clean Code: A Handbook of Agile Software Craftsmanship</a>
+                </p>
+                <div class="buttons">
+                    <a href="/store/clean-code-a-handbook-of-agile-software-craftsmanship-9780132350884?w_ptgrevartcl=Robert+C.+Martin%27s+Clean+Code+Tip+of+the+Week+%238%3a+Your+Build+Shouldn%27t+Require+More+Than+One+Step_1350506" class="button">Learn More</a>
+                        <a href="/buy.aspx?isbn=9780132350884&w_ptgrevartcl=Robert+C.+Martin%27s+Clean+Code+Tip+of+the+Week+%238%3a+Your+Build+Shouldn%27t+Require+More+Than+One+Step_1350506" class="buy button"><span class="ss-icon">&#xE500;</span>Buy</a>
+                </div>
+            </div>
+                    <div id="articleDiscussion" class="clearfix">
+                <h3 class="sectionHeader">Discussions</h3>
+<script type="text/javascript">
+    var disqus_identifier = 'aa873aad-3f8c-4080-b703-59787734a478';
+    var discussionEnv = 'informit';
+    var disqus_skip_auth = true;
+    
+</script>
+<div id="disqus_thread"></div>
+<script language="JavaScript" src="/display/common/javascript/disqus.js" type="text/JavaScript"></script>
+<noscript>
+    Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript=informit">comments powered by Disqus.</a>
+</noscript>
+<a href="http://disqus.com" class="dsq-brlink">
+    comments powered by <span class="logo-disqus">Disqus</span>
+</a>
+            </div>
+    </div>
+    <div id="columnTwo">
+        <div>
+<div id="promotions" class="tabwidget prop">
+	<h4>Related Resources</h4>
+	<ul class="tabs">
+		<li><a href="#" onclick="tabWidget(1,'promotions'); loadWidget('promotions', 0, '/Related/Podcasts/675186?stateIntId=60220'); return false;">Podcasts</a></li>
+		<li><a href="#" onclick="tabWidget(2,'promotions'); loadWidget('promotions', 1, '/Related/Blogs/675186?stateIntId=60220'); return false;">Blogs</a></li>
+		<li><a href="#" onclick="tabWidget(3,'promotions'); loadWidget('promotions', 2, '/Related/Articles/1350506?stateIntId=60220'); return false;">Articles</a></li>
+		<li class="selected"><a href="#" onclick="tabWidget(4,'promotions'); return false;">Store</a></li>
+	</ul>
+	<div class="container"></div>
+	<div class="container"></div>
+	<div class="container"></div>
+	<div class="container on">
+
+    <dl class="store">
+        <dt>
+                        <a href="/store/being-agile-eleven-breakthrough-techniques-to-keep-9780133375626?w_ptgrevartcl=Being+Agile%3a+Eleven+Breakthrough+Techniques+to+Keep+You+from+%22Waterfalling+Backward%22_1966390">
+                <img src="/ShowCover.aspx?isbn=0133375625&type=e" alt="Being Agile: Eleven Breakthrough Techniques to Keep You from &quot;Waterfalling Backward&quot;" class="product" />
+            </a>
+            <a href="/store/being-agile-eleven-breakthrough-techniques-to-keep-9780133375626" class="title">
+                Being Agile: Eleven Breakthrough Techniques to Keep You from &quot;Waterfalling Backward&quot;
+            </a>
+        </dt>
+        <dd class="meta">By <a href="/authors/bio.aspx?a=c2907033-71c5-4606-84bc-c4ea7efcc763">Leslie Ekas</a>, <a href="/authors/bio.aspx?a=b3292755-a05c-46a5-8d35-2b86525cb22e">Scott Will</a></dd>
+        <dd class="pricing">
+                <img src="/display/common/images/icons/product_16.png" alt="Physical Product" />
+            <a href="/store/being-agile-eleven-breakthrough-techniques-to-keep-9780133375626">$27.99</a>
+        </dd>
+    </dl>
+    <dl class="store">
+        <dt>
+                        <a href="/store/service-oriented-architecture-soa-compass-business-9780133762907?w_ptgrevartcl=Service-Oriented+Architecture+(SOA)+Compass%3a+Business+Value%2c+Planning+%2c+and+Enterprise+Roadmap+(paperback)_2139006">
+                <img src="/ShowCover.aspx?isbn=0133762904&type=e" alt="Service-Oriented Architecture (SOA) Compass: Business Value, Planning , and Enterprise Roadmap (paperback)" class="product" />
+            </a>
+            <a href="/store/service-oriented-architecture-soa-compass-business-9780133762907" class="title">
+                Service-Oriented Architecture (SOA) Compass: Business Value, Planning , and Enterprise Roadmap (paperback)
+            </a>
+        </dt>
+        <dd class="meta">By <a href="/authors/bio.aspx?a=bce6c6e3-add8-4239-8ad8-af5d2d15316b">Norbert Bieberstein</a>, <a href="/authors/bio.aspx?a=e3fbd978-831c-4ae0-9aef-0ce1dd4e5987">Sanjay Bose</a>, <a href="/authors/bio.aspx?a=b6273379-a14b-4cd7-bbb9-7ef0ed8a979a">Marc Fiammante</a>, <a href="/authors/bio.aspx?a=a7d7efab-0a28-437a-adbe-73d166507d70">Keith Jones</a>, <a href="/authors/bio.aspx?a=b82c2730-7e29-442a-884a-1114f24b54b9">Rawn Shah</a></dd>
+        <dd class="pricing">
+                <img src="/display/common/images/icons/product_16.png" alt="Physical Product" />
+            <a href="/store/service-oriented-architecture-soa-compass-business-9780133762907">$43.99</a>
+        </dd>
+    </dl>
+    <dl class="store">
+        <dt>
+                        <a href="/store/executable-specifications-with-scrum-a-practical-guide-9780321784131?w_ptgrevartcl=Executable+Specifications+with+Scrum%3a+A+Practical+Guide+to+Agile+Requirements+Discovery_1678896">
+                <img src="/ShowCover.aspx?isbn=0321784138&type=e" alt="Executable Specifications with Scrum: A Practical Guide to Agile Requirements Discovery" class="product" />
+            </a>
+            <a href="/store/executable-specifications-with-scrum-a-practical-guide-9780321784131" class="title">
+                Executable Specifications with Scrum: A Practical Guide to Agile Requirements Discovery
+            </a>
+        </dt>
+        <dd class="meta">By <a href="/authors/bio.aspx?a=b7af3ee3-f9f1-4616-b696-afbc5413174a">Mario Cardinal</a></dd>
+        <dd class="pricing">
+                <img src="/display/common/images/icons/product_16.png" alt="Physical Product" />
+            <a href="/store/executable-specifications-with-scrum-a-practical-guide-9780321784131">$27.99</a>
+        </dd>
+    </dl>
+    <p class="more">
+        <img src="/display/InformIT/images/icons/plus.png" alt="" />
+        <a href="/store/index.aspx?st=60220">See All Related Store Items</a>
+    </p>
+
+	</div>
+</div>
+        </div>
+        
+        
+    </div>
+</div><div id="header"><div class="cranium"><div class="branding"><div id="hLogo"><a href="/" accesskey="0" title="Home" class="logo"><!--[if lte IE 8]><img src="/display/informIT/images/header/informit.png" alt="InformIT" /><![endif]--></a></div><div class="tagline">the trusted technology learning source</div></div><div id="headerLinks" class="clearfix">
+                   
+    <div id="cartLink" class="headerLink c">
+        <span class="bighead ss-icon">&#xE500;</span>
+        <a href="https://memberservices.informit.com/cart/buy.aspx?partner=53">
+            <span class="bighead">View </span>Your Cart
+        </a>
+    </div>
+
+    <div class="hi">
+            <a href="https://memberservices.informit.com/my_account/login.aspx?partner=53">Account Sign In</a>
+    </div>
+
+              <form name="headersearchform" id="headersearchform" class="s" method="GET" action="/search/index.aspx"><label for="headersearchform">Search</label><input onfocus="checkClear(this,'Search');" type="text" name="query" id="query" value="Search" /><input type="submit" id="searchbutton" class="ss-icon" value="🔎" /></form></div></div></div><div id="siteNav"><div class="cranium clearfix"><ul id="nav"><li><a class="arrow" href="/topics/">Topics</a><ul class="column1 sib"><li><a href="/topics/topic.aspx?st=61443">Business &amp; Management</a></li><li><a href="/topics/topic.aspx?st=61444">Certification</a></li><li><a href="/topics/topic.aspx?st=98420">Cloud Computing &amp; Virtualization</a></li><li><a href="/topics/topic.aspx?st=61446">Data</a></li><li><a href="/topics/topic.aspx?st=61447">Engineering</a></li><li><a href="/topics/topic.aspx?st=61449">Graphics &amp; Web Design</a></li><li><a href="/topics/topic.aspx?st=61450">Hardware</a></li><li><a href="/topics/topic.aspx?st=61451">Home &amp; Office Computing</a></li><li><a href="/topics/topic.aspx?st=61452">Information Technology</a></li></ul><ul class="column2 sib"><li><a href="/topics/topic.aspx?st=98422">Mobile Application Development &amp; Programming</a></li><li><a href="/topics/topic.aspx?st=61453">Networking</a></li><li><a href="/topics/topic.aspx?st=66399">Open Source</a></li><li><a href="/topics/topic.aspx?st=61454">Operating Systems, Server</a></li><li><a href="/topics/topic.aspx?st=61455">Process Improvement</a></li><li><a href="/topics/topic.aspx?st=61456">Programming</a></li><li><a href="/topics/topic.aspx?st=61457">Security</a></li><li><a href="/topics/topic.aspx?st=61458">Software Development &amp; Management</a></li><li><a href="/topics/topic.aspx?st=61459">Web Development</a></li><li><a href="/topics/topic.aspx?st=61460">Web Services</a></li></ul></li><li><a class="arrow" href="/store/">Store</a><ul><li><a href="/store/browse/books">Books</a></li><li><a href="/store/browse/ebooks">eBooks</a></li><li><a href="/store/browse/practice-tests">Practice Tests</a></li><li><a href="/store/browse/software">Software</a></li><li><a href="/store/browse/video">Video</a></li></ul></li><li><a href="/authors/">Authors</a></li><li><a href="http://safari.informit.com/home?cid=my-201307-informit-topnav">Safari Books Online</a></li><li><a class="arrow" href="/imprint/">Imprints</a><ul class="imprints"><li><a href="/imprint/index.aspx?st=61085">Addison-Wesley Professional</a></li><li><a href="http://www.ciscopress.com">Cisco Press</a></li><li><a href="http://www.ibmpressbooks.com">IBM Press</a></li><li><a href="http://www.pearsonitcertification.com">Pearson IT Certification</a></li><li><a href="/imprint/index.aspx?st=61089">Prentice Hall Professional</a></li><li><a href="http://www.quepublishing.com">Que Publishing</a></li><li><a href="/imprint/index.aspx?st=61091">Sams Publishing</a></li><li><a href="http://www.pearsonitcertification.com/handlers/promotion/138356">VMware Press</a></li></ul></li><li><a class="arrow" href="/explore/">Explore</a><ul class="last"><li><a href="/about/">About</a></li><li><a href="/affiliates/">Affiliates</a></li><li><a href="/articles/">Articles</a></li><li><a href="/blogs/">Blogs</a></li><li><a href="/newsletters/">Newsletters</a></li><li><a href="/podcasts/">Podcasts</a></li><li><a href="/press/">Press</a></li><li><a href="/promotions/">Promotions</a></li><li><a href="/library/">Reference Library</a></li><li><a href="/user_groups/">User Groups</a></li></ul></li></ul></div></div><div id="footer"><ul class="links"><li><a href="/about/">About</a></li><li><a href="/affiliates/">Affiliates</a></li><li><a href="/about/contact_us/">Contact Us</a></li><li><a href="/about/jobs.aspx">Jobs</a></li><li><a href="/about/legal.aspx">Legal Notice</a></li><li><a href="/about/privacy.aspx">Privacy Policy</a></li><li><a href="/press/">Press</a></li><li><a href="/promotions/">Promotions</a></li><li><a href="/site_map/">Site Map</a></li><li><a href="/about/write_for_us.aspx">Write for Us</a></li></ul><div itemscope="itemscope" itemtype="http://schema.org/Corporation">
+					©  2014 Pearson Education, <span itemprop="name">Informit</span>. All rights reserved.<br /><div itemprop="address" itemscope="itemscope" itemtype="http://schema.org/PostalAddress"><span itemprop="streetAddress">800 East 96th Street</span>, <span itemprop="addressLocality">Indianapolis</span>, <span itemprop="addressRegion">Indiana </span><span itemprop="postalCode">46240</span></div></div></div><div id="strap"><div class="cranium"><div id="pearsonTopLogoLink"></div><div id="pearsonAlwaysLearningImage"></div></div></div><!--Google analytics--><script type="text/javascript">var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www."); document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));</script><script type="text/javascript">try {var pageTracker = _gat._getTracker("UA-433761-6"); pageTracker._setVar(""); pageTracker._trackPageview();} catch(err) {}</script><!--Webtrends--><script language="JavaScript" src="/display/InformIT/javascript/webtrends.js" type="text/javascript"></script><noscript><img alt="" border="0" name="DCSIMG" width="1" height="1" src="http://statse.webtrendslive.com/dcs1slwc200000cl8qmbbfxqx_5x2u/njs.gif?dcsuri=/nojavascript&amp;WT.js=No&amp;WT.tv=8.0.3" /></noscript><!--Disqus Comment Count--><script type="text/javascript">
+			var disqus_shortname = 'informit';
+			</script><script language="JavaScript" src="/display/common/javascript/disqus_count.js" type="text/JavaScript"></script><script language="JavaScript" src="/display/common/javascript/micronav.js" type="text/JavaScript"></script><script type="text/JavaScript">
+            setTimeout(function(){var a=document.createElement("script");
+            var b=document.getElementsByTagName("script")[0];
+            a.src=document.location.protocol+"//dnn506yrbagrg.cloudfront.net/pages/scripts/0018/4148.js?"+Math.floor(new Date().getTime()/3600000);
+            a.async=true;a.type="text/javascript";b.parentNode.insertBefore(a,b)}, 1);
+        </script></div></body></html>

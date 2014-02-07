@@ -1,0 +1,517 @@
+
+
+
+<!DOCTYPE html><!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" xsl="http://www.w3.org/1999/XSL/Transform xmlns:fb="http://www.facebook.com/2008/fbml""><![endif]--><!--[if IE 7]><html class="no-js lt-ie9 lt-ie8" xsl="http://www.w3.org/1999/XSL/Transform xmlns:fb="http://www.facebook.com/2008/fbml""> <![endif]--><!--[if IE 8]><html class="no-js lt-ie9" xsl="http://www.w3.org/1999/XSL/Transform" xmlns:fb="http://www.facebook.com/2008/fbml"><![endif]--><!--[if gt IE 8]><!--><html class="no-js" xsl="http://www.w3.org/1999/XSL/Transform" xmlns:fb="http://www.facebook.com/2008/fbml"><!--<![endif]--><head><meta name="verify-v1" content="jKqgZt8qtZUt+IrazV2fydKUZG2KKR8QEUoYjH9tth4=" /><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" /><title>Robert C. Martin's Clean Code Tip of the Week #11: Output Arguments are Counterintuitive | Robert C. Martin's Clean Code Tip of the Week #11: Output Arguments are Counterintuitive | InformIT</title><link href="/display/common/css/commonAll.css?v=20131104" rel="stylesheet" type="text/css" /><link href="/display/common/css/commonFront.css?v=20131104" rel="stylesheet" type="text/css" /><link href="/display/common/css/jquery-ui-custom.css?v=20131104" rel="stylesheet" type="text/css" /><link href="/display/InformIT/css/style.css?v=20131104" rel="stylesheet" type="text/css" /><link rel="apple-touch-icon-precomposed" sizes="144x144" href="/display/InformIT/images/objects/touch_icons/apple-touch-icon-144x144-precomposed.png" /><link rel="apple-touch-icon-precomposed" sizes="114x114" href="/display/InformIT/images/objects/touch_icons/apple-touch-icon-114x114-precomposed.png" /><link rel="apple-touch-icon-precomposed" sizes="72x72" href="/display/InformIT/images/objects/touch_icons/apple-touch-icon-72x72-precomposed.png" /><link rel="apple-touch-icon-precomposed" href="/display/InformIT/images/objects/touch_icons/apple-touch-icon-precomposed.png" /><script language="JavaScript" src="/display/common/javascript/modernizr.custom.js?v=20131104" type="text/javascript"></script><script language="JavaScript" src="/display/common/javascript/jquery.js?v=20131104" type="text/JavaScript"></script><script language="JavaScript" src="/display/common/javascript/global.js?v=20131104" type="text/JavaScript"></script><!--[if lte IE 8]><script language="JavaScript" src="/display/common/javascript/respond.min.js" type="text/JavaScript"></script><![endif]--><script language="JavaScript" src="/display/common/javascript/swfobject.js" type="text/JavaScript"></script><script language="JavaScript" src="/display/common/javascript/jquery-ui-1.10.2.custom.min.js" type="text/JavaScript"></script><script language="JavaScript" src="/display/common/javascript/fastclick.min.js" type="text/JavaScript"></script><link rel="canonical" href="http://www.informit.com/articles/article.aspx?p=1382188" />
+      
+      
+    
+        <meta name="pageType" content="Articles and Sample Chapters" />
+      <meta name="publishedDate" content="Jul 28, 2009" />
+        <meta name="description" content="We join &quot;The Craftsman,&quot; Robert C. Martin&#39;s series on an interstellar spacecraft where programmers hone their coding skills. In this eleventh tip in the series, the crew learns that if your function must change the state of something, have it change the state of the object it is called on." />
+      
+        
+        
+    <link rel="shortcut icon" href="/display/InformIT/images/objects/favicon.ico?v=20131104" />
+        <meta name="WT.si_n" content="Site_Funnel"/>
+<meta name="WT.si_p" content="Article"/>
+<meta name="DCSext.w_ptgarctlnm" content="Robert C. Martin's Clean Code Tip of the Week #11: Output Arguments are Counterintuitive"/>
+<meta name="DCSext.w_ptgarctlpg" content="1_Robert C. Martin's Clean Code Tip of the Week #11: Output Arguments are Counterintuitive"/>
+<meta name="WT.ad" content="Home > Articles > Process Improvement"/>
+
+      </head><body class=""><div class="wrapper">
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(document).bind('click', function (e) {
+            var $clicked = $(e.target);
+            if ($clicked.is('#articleTOC') || $clicked.parents().is('#articleTOC')) {
+                $('#articleTOCList').show();
+            }
+            else {
+                hideTOC();
+            }
+        });
+    });
+
+    function hideTOC() {
+        $('#articleTOCList').hide();
+    }
+</script>
+
+<div id="content" class="articleProduct">
+    <div id="columnOne">
+<p class="crumb">
+            <a href="/index.aspx">Home</a>
+            &gt;
+            <a href="/articles/index.aspx">Articles</a>
+            &gt;
+            <a href="/articles/index.aspx?st=66384">Process Improvement</a>
+</p>
+        <div id="articleContent" class="clearfix">
+            <div id="articleHeader" class="sectionHeader">
+                    <h1>Robert C. Martin&#39;s Clean Code Tip of the Week #11: Output Arguments are Counterintuitive</h1>
+                <a rel="author" href="/authors/bio.aspx?a=361a5e70-f1e2-432b-9928-b30b4742ae80"><img src="http://ptgmedia.pearsoncmg.com/authors/m/martin_robert_c/martin_robert_c_e.jpg" alt="Robert C. Martin" class="author" /></a>                <ul>
+                        <li class="authorName"> By <a rel="author" href="/authors/bio.aspx?a=361a5e70-f1e2-432b-9928-b30b4742ae80">Robert C. Martin</a></li>
+                    <li>Jul 28, 2009</li>
+                </ul>
+            </div>
+            <div class="articleTools">
+                <div class="articleInteraction">
+                    <ul>
+                        <li>
+                            <a href="/articles/printerfriendly.aspx?p=1382188" title="Print"><img src="/display/InformIT/images/icons/print_16.png" alt="Print" /></a> <a href="/articles/printerfriendly.aspx?p=1382188" title="Print"><span>Print</span></a>
+                        </li>
+                        <li>
+
+<script type="text/javascript">
+    addthis_pub = 'informit';
+    addthis_logo = 'http://www.informit.com/display/InformIT/images/header/informit.png';
+    addthis_logo_background = '596770';
+    addthis_logo_color = '596770';
+    addthis_brand = 'informIT';
+    addthis_options = 'email, delicious, digg, facebook, google, newsvine, reddit, slashdot, stumbleupon, technorati, twitter, more';
+</script>
+<a href="http://www.addthis.com/bookmark.php" onmouseover="return addthis_open(this, '', '[URL]', '[TITLE]')" onmouseout="addthis_close()" onclick="return addthis_sendto()"><img src="/display/InformIT/images/icons/share_16.png" width="16" height="16" border="0" alt="Share This" /></a><a href="http://www.addthis.com/bookmark.php" onmouseover="return addthis_open(this, '', '[URL]', '[TITLE]')" onmouseout="addthis_close()" onclick="return addthis_sendto()"><span>Share This</span></a>
+<script type="text/javascript" src="http://s7.addthis.com/js/152/addthis_widget.js"></script>
+                        </li>
+                        <li class="last">
+                                <a href="#articleDiscussion" title="Discuss"><img src="/display/InformIT/images/icons/discuss_16.png" alt="Discuss" /></a><a href="#articleDiscussion" title="Discuss"><span>Discuss</span></a>
+                        </li>
+                    </ul>
+                </div>
+                    <div class="pagination">
+        <span class="paginationLocation"><strong>Page 1</strong> of 1</span>
+    </div>
+
+            </div>
+            <div id="articleText">
+                    <div class="relatedBook">
+                        <div class="header graydient">
+                            <h3>From the author of</h3>
+                        </div>
+                        <div class="productArea graydient clearfix">
+                            <a href="/store/clean-code-a-handbook-of-agile-software-craftsmanship-9780132350884?w_ptgrevartcl=Robert+C.+Martin%27s+Clean+Code+Tip+of+the+Week+%2311%3a+Output+Arguments+are+Counterintuitive_1382188"><img src="/ShowCover.aspx?isbn=9780132350884&amp;type=d" alt="Clean Code: A Handbook of Agile Software Craftsmanship" class="product" /></a><a href="/store/clean-code-a-handbook-of-agile-software-craftsmanship-9780132350884?w_ptgrevartcl=Robert+C.+Martin%27s+Clean+Code+Tip+of+the+Week+%2311%3a+Output+Arguments+are+Counterintuitive_1382188" class="title">Clean Code: A Handbook of Agile Software Craftsmanship</a>
+                            <br />
+                            <br />
+                            <a href="/store/clean-code-a-handbook-of-agile-software-craftsmanship-9780132350884?w_ptgrevartcl=Robert+C.+Martin%27s+Clean+Code+Tip+of+the+Week+%2311%3a+Output+Arguments+are+Counterintuitive_1382188" class="button">Learn More</a>
+                                <a href="/buy.aspx?isbn=9780132350884&w_ptgrevartcl=Robert+C.+Martin%27s+Clean+Code+Tip+of+the+Week+%2311%3a+Output+Arguments+are+Counterintuitive_1382188" class="buy button"><span class="ss-icon">&#xE500;</span>Buy</a>
+                        </div>
+                    </div>
+                                    <div id="articleLongDescription">We join "The Craftsman," Robert C. Martin's series on an interstellar spacecraft where programmers hone their coding skills. In this eleventh tip in the series, the crew learns that if your function must change the state of something, have it change the state of the object it is called on.</div>
+                    <div id="articleDescription"></div>
+                
+<hr />
+
+<p><em>Saturday,
+September 1, 1945, 10:45AM GMT, Caen, France.</i></em></p>
+
+<p><em>Corporal
+Murphy and Leftenant Haynes crouched behind an overturned horse-cart that had
+been filled with bricks. The bricks
+made a reasonable bulwark against the potshots of the sniper in the second
+floor of the storefront across the street.</i></em></p>
+
+<p><em>“Can
+you see him, Audie?” Haynes asked?</i></em></p>
+
+<p><em>“Nah,
+I recon I’ll have to wait for him to shoot at us again. I don’t suppose you’d care to wave your
+rifle in the air to draw his fire?”</i></em></p>
+
+<p><em>Haynes
+just glared at his diminutive companion. He was glad that the Americans had sent so many troops to help England
+fight back the remnants of the German occupation forces, and clean up the mess
+in Europe, but this particular Texan reminded him a bit too much of the movies
+about the American west he used to like to watch in the cinema.</i></em></p>
+
+<p><em>The
+Texan picked up a brick and handed it to Haynes. “When I tell you to, toss that brick over to the right about
+30 feet.”</i></em></p>
+
+<p><em>Haynes
+took the brick and watched as Murphy took aim on the building. Then Murphy said: “Go!” and Haynes
+tossed the brick. Murphy’s rifle
+cracked a second after the brick hit the ground.</i></em></p>
+
+<p><em>“That
+fella got a little too curious. I
+don’t recon he’ll be curious about anything else again. We’d best get movin’.”</i></em></p>
+
+
+
+<p><i>Haynes nodded, and the two of them dashed across the street and into
+the store. As he ran, Haynes
+wondered how the battle for London was going.</i></p>
+
+<hr />
+
+<p><i>Thu, 16 Mar 2002, 11:00</i></p>
+
+<p>“Hey Hotshot, got a minute?”</p>
+
+<p>I was just coming back from a break and
+happened to walk past Jasmine’s workstation. I happen to walk past Jasmine’s workstation a lot. </p>
+
+<p>“What’s up, Jasmine?”</p>
+
+<p>“Look at this code. What does this mean to you?”</p>
+
+<p>She had highlighted one line on her screen.</p>
+
+
+
+<pre> impactCount += scanImpacts(ImpactType.SMALL_PUNCTURE, impacts);</pre>
+
+
+
+<p>“Oh, you must be working with the
+micrometeoroid impact locator app. I’ve heard that’s a real mess.”</p>
+
+<p>Jasmine smiled and sneered at the same time.</p>
+
+<p>“Yeah, it was written about ten years ago, and
+it’s pretty tough to work with.”</p>
+
+<p>I looked more closely at the line of code she
+had highlighted. </p>
+
+<p>“OK, so it’s counting the number of small
+punctures in the <tt>impacts</tt> list.”</p>
+
+<p>“Yeah, that’s what I thought too.”</p>
+
+<p>“You mean that’s not what it does?”</p>
+
+<p>Jasmine fixed me with those gimlet green eyes
+and shook her head. Her long black
+hair shimmered and danced. </p>
+
+<p>“No, that’s not at all what it does.”</p>
+
+<p>I snapped back to reality. “Uh… it’s not?”</p>
+
+<p>Jasmine chuckled and said: “Dyson to Alphonse,
+are you there? No Hotshot, that’s
+not what this line of code does. &#8211; Hay Jerry, got a minute?”</p>
+
+<p>I’d noticed that Jerry happened to walk past
+Jasmine’s workstation a lot too.</p>
+
+<p>“I swear, Jasmine, whatever it is, I didn’t do
+it!”</p>
+
+<p>I laughed under my breath. The dressing down she had given him
+yesterday had been pretty funny.</p>
+
+<p>“Relax, Jerry, I just want you to look at some
+code.”</p>
+
+<p>“Who wrote it? If it was me, forget it!”</p>
+
+<p>“No, it wasn’t you, Jerry, it was written ten
+years ago by Jean.”</p>
+
+<p>Jean stood up from her workstation. “Did someone mention my name?”</p>
+
+<p>Jasmine smiled at her and said: “We’re just
+looking at some code you wrote a long time ago, Jean.”</p>
+
+<p>Jean’s grin and eyes got wide. “Oh my dears, I wish you lots of luck
+with that. Call me if you need
+me.” And she sat back down.</p>
+
+<p>Jerry had been looking at the highlighted line
+of code. </p>
+
+<p>“This is part of that old micrometeoroid impact
+locator isn’t it?” And then under his breath: “What a dog that system is. Anyway, it looks like this statement scans the <tt>impacts</tt> list for small punctures.”</p>
+
+<p>“That’s what I thought too.” I blurted. “But Jasmine says no.”</p>
+
+<p>Jerry looked confused. “I don’t see what else it could be
+doing. It scans the <tt>impacts</tt> list for impacts that have been classified as <tt>ImpactType.SMALL_PUNCTURE.</tt> </p>
+
+<p>Jasmine laughed and said: “I love it when you
+talk to me in code, Jerry.”</p>
+
+<p>Jerry’s mouth tightened.</p>
+
+<p>Jasmine continued. “But, no, that’s not what this line of code does. Not even close.”</p>
+
+<p>I had been looking at the rest of the code on
+the screen, and I noticed something.</p>
+
+<p>“Jasmine, I think you’re wrong. Look at the line three lines above the
+one you have highlighted.”</p>
+
+<p>Jasmine smiled evilly, and moved the highlight
+up.</p>
+
+<p>“You mean this line, Alphonse?”</p>
+
+
+<pre>List&lt;Impact&gt; impacts =
+ImpactDB.getImpacts();</pre>
+
+
+
+<p>“Yeah, it’s reading the impact list from the
+database. That makes perfect sense
+if the other line is scanning that list for small punctures.”</p>
+
+<p>Jasmine’s smile got even broader. “Yes, that does make prefect
+sense. But that’s not what’s going
+on. Here, look at this.”</p>
+
+<p>Jasmine scrolled up a few more lines.</p>
+
+
+
+<pre>ImpactDB.setFilter(ImpactType.SMALL_PUNCTURE);</pre>
+
+
+<p>Jerry and I looked at that line for a long
+time. </p>
+
+<p>“Confusing, isn’t it?” asked Jasmine.</p>
+
+<p>“Yeah.” Said Jerry. “Why are they filtering on small punctures and then scanning
+for small punctures. That seems
+redundant.”</p>
+
+<p>I just shook my head. </p>
+
+<p>Jasmine nodded and scrolled down about 20
+lines. “Now look at this. Keep in mind that the filter is still
+set.”</p>
+
+
+<pre>ImpactDB.saveImpacts(impacts);</pre>
+
+
+
+<p>“Yikes! This is awful!” I blurted. Then I realized that Jean probably heard me. Jerry and Jasmine just snickered. </p>
+
+<p>“Yeah, it’s pretty bad.” Said Jasmine
+quietly. “So, any guess as to what
+that original line of code does?”</p>
+
+<p>Jerry pointed at the screen. “I guess it
+depends on what that filter is doing.”</p>
+
+<p>“Yeah.” Jasmine agreed. “It does.”</p>
+
+<p>“I don’t get it.” I said. “Why would you read something, scan it,
+and then write it. Nothing in this
+code changes the <tt>impacts</tt> list.”</p>
+
+<p>Jasmine looked at me out of the corner of her
+green eyes. “Are you sure about that Hotshot? Look again at the line I called you over here for.”</p>
+
+<p>My eyes scanned up the screen until I saw it.</p>
+
+
+
+<pre> impactCount += scanImpacts(ImpactType.SMALL_PUNCTURE, impacts);</pre>
+
+
+
+<p>It took about twenty seconds. Then:</p>
+
+<p>“Oh! The <tt>impacts</tt> list is an <i>output</i>! Oh! The <tt>scanImpacts</tt> function gets all the impacts from some other source and <i>puts them into</i> the <tt>impacts</tt> list. Oh!”</p>
+
+<p>Jerry rolled his eyes. “Of course. Duh; <tt>impacts</tt> is an
+output. </p>
+
+<p>“Yes, dears. The <tt>impacts</tt> list is an
+output.”</p>
+
+<p>Jean had managed to appear right next to us
+while we were all staring at the screen. </p>
+
+<p>She continued: “We didn’t know any better in
+those days, my dears. We did the
+best we could with what we knew, but we didn’t know that much. So we made really terrible errors like
+this one…and so many others.”</p>
+
+<p>“There was a time, my dears, when we weren’t
+sure this ship would survive…oh but let’s not talk about that.”</p>
+
+<p>The three of us were stunned. The ship’s survival was never in
+question. Not ever. What was she talking about?</p>
+
+<p>“Fortunately for us, dears, Mr. C. taught us
+how to write much better code. You
+should all go look at rule F2.”</p>
+
+<p>With that, Jean sauntered back to her
+workstation.</p>
+
+<p>Jasmine smiled at us like the cat with feathers
+on her mouth. She silently brought
+up Mr. C’s rules.</p>
+
+
+<div class="sidebar">
+<p class="title"><strong>F2: Output Arguments</strong></p>
+
+<p>Output
+arguments are counterintuitive. Readers expect arguments to be inputs, not outputs. If your function must change the state
+of something, have it change the state of the object it is called on.</p>
+
+</div>
+
+</body>
+
+</html>
+
+            </div>
+            <div class="articleToolsSecond">
+                    <div class="pagination">
+        <span class="paginationLocation"><strong>Page 1</strong> of 1</span>
+    </div>
+
+                <div class="articleInteraction">
+                    <ul>
+                        <li>
+
+<script type="text/javascript">
+    addthis_pub = 'informit';
+    addthis_logo = 'http://www.informit.com/display/InformIT/images/header/informit.png';
+    addthis_logo_background = '596770';
+    addthis_logo_color = '596770';
+    addthis_brand = 'informIT';
+    addthis_options = 'email, delicious, digg, facebook, google, newsvine, reddit, slashdot, stumbleupon, technorati, twitter, more';
+</script>
+<a href="http://www.addthis.com/bookmark.php" onmouseover="return addthis_open(this, '', '[URL]', '[TITLE]')" onmouseout="addthis_close()" onclick="return addthis_sendto()"><img src="/display/InformIT/images/icons/share_16.png" width="16" height="16" border="0" alt="Share This" /></a><a href="http://www.addthis.com/bookmark.php" onmouseover="return addthis_open(this, '', '[URL]', '[TITLE]')" onmouseout="addthis_close()" onclick="return addthis_sendto()"><span>Share This</span></a>
+<script type="text/javascript" src="http://s7.addthis.com/js/152/addthis_widget.js"></script>
+                        </li>
+                        <li class="last">
+                            <a href="#" onclick="openBrWindow('/my_account/addTo.aspx?p=b0068345-2be7-4da5-af4f-f307be50260e&e=9d1448cc-d997-42d9-b600-3a54c41bdf33&t=a','addMyAccount','scrollbars=no,resizable=yes,width=300,height=200');return false;" title="Your Account"><img class="save" alt="" src="/display/InformIT/images/icons/save_16.png" /></a><a href="#" onclick="openBrWindow('/my_account/addTo.aspx?p=b0068345-2be7-4da5-af4f-f307be50260e&e=9d1448cc-d997-42d9-b600-3a54c41bdf33&t=a','addMyAccount','scrollbars=no,resizable=yes,width=300,height=200');return false;">Save To Your Account</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+            <div class="relatedBookBottom graydient clearfix">
+                <a href="/store/clean-code-a-handbook-of-agile-software-craftsmanship-9780132350884?w_ptgrevartcl=Robert+C.+Martin%27s+Clean+Code+Tip+of+the+Week+%2311%3a+Output+Arguments+are+Counterintuitive_1382188"><img src="/ShowCover.aspx?isbn=9780132350884&amp;type=e" alt="Clean Code: A Handbook of Agile Software Craftsmanship" class="product" /></a>
+                <h4>From the author of</h4>
+                <p>
+                    <a href="/store/clean-code-a-handbook-of-agile-software-craftsmanship-9780132350884?w_ptgrevartcl=Robert+C.+Martin%27s+Clean+Code+Tip+of+the+Week+%2311%3a+Output+Arguments+are+Counterintuitive_1382188" class="title">Clean Code: A Handbook of Agile Software Craftsmanship</a>
+                </p>
+                <div class="buttons">
+                    <a href="/store/clean-code-a-handbook-of-agile-software-craftsmanship-9780132350884?w_ptgrevartcl=Robert+C.+Martin%27s+Clean+Code+Tip+of+the+Week+%2311%3a+Output+Arguments+are+Counterintuitive_1382188" class="button">Learn More</a>
+                        <a href="/buy.aspx?isbn=9780132350884&w_ptgrevartcl=Robert+C.+Martin%27s+Clean+Code+Tip+of+the+Week+%2311%3a+Output+Arguments+are+Counterintuitive_1382188" class="buy button"><span class="ss-icon">&#xE500;</span>Buy</a>
+                </div>
+            </div>
+                    <div id="articleDiscussion" class="clearfix">
+                <h3 class="sectionHeader">Discussions</h3>
+<script type="text/javascript">
+    var disqus_identifier = '1cfba3b1-685b-4ba7-adba-86c087674c33';
+    var discussionEnv = 'informit';
+    var disqus_skip_auth = true;
+    
+</script>
+<div id="disqus_thread"></div>
+<script language="JavaScript" src="/display/common/javascript/disqus.js" type="text/JavaScript"></script>
+<noscript>
+    Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript=informit">comments powered by Disqus.</a>
+</noscript>
+<a href="http://disqus.com" class="dsq-brlink">
+    comments powered by <span class="logo-disqus">Disqus</span>
+</a>
+            </div>
+    </div>
+    <div id="columnTwo">
+        <div>
+<div id="promotions" class="tabwidget prop">
+	<h4>Related Resources</h4>
+	<ul class="tabs">
+		<li><a href="#" onclick="tabWidget(1,'promotions'); loadWidget('promotions', 0, '/Related/Podcasts/675186?stateIntId=66384'); return false;">Podcasts</a></li>
+		<li><a href="#" onclick="tabWidget(2,'promotions'); loadWidget('promotions', 1, '/Related/Blogs/675186?stateIntId=66384'); return false;">Blogs</a></li>
+		<li><a href="#" onclick="tabWidget(3,'promotions'); loadWidget('promotions', 2, '/Related/Articles/1382188?stateIntId=66384'); return false;">Articles</a></li>
+		<li class="selected"><a href="#" onclick="tabWidget(4,'promotions'); return false;">Store</a></li>
+	</ul>
+	<div class="container"></div>
+	<div class="container"></div>
+	<div class="container"></div>
+	<div class="container on">
+
+    <dl class="store">
+        <dt>
+                        <a href="/store/being-agile-eleven-breakthrough-techniques-to-keep-9780133375626?w_ptgrevartcl=Being+Agile%3a+Eleven+Breakthrough+Techniques+to+Keep+You+from+%22Waterfalling+Backward%22_1966390">
+                <img src="/ShowCover.aspx?isbn=0133375625&type=e" alt="Being Agile: Eleven Breakthrough Techniques to Keep You from &quot;Waterfalling Backward&quot;" class="product" />
+            </a>
+            <a href="/store/being-agile-eleven-breakthrough-techniques-to-keep-9780133375626" class="title">
+                Being Agile: Eleven Breakthrough Techniques to Keep You from &quot;Waterfalling Backward&quot;
+            </a>
+        </dt>
+        <dd class="meta">By <a href="/authors/bio.aspx?a=c2907033-71c5-4606-84bc-c4ea7efcc763">Leslie Ekas</a>, <a href="/authors/bio.aspx?a=b3292755-a05c-46a5-8d35-2b86525cb22e">Scott Will</a></dd>
+        <dd class="pricing">
+                <img src="/display/common/images/icons/product_16.png" alt="Physical Product" />
+            <a href="/store/being-agile-eleven-breakthrough-techniques-to-keep-9780133375626">$27.99</a>
+        </dd>
+    </dl>
+    <dl class="store">
+        <dt>
+                        <a href="/store/service-oriented-architecture-soa-compass-business-9780133762907?w_ptgrevartcl=Service-Oriented+Architecture+(SOA)+Compass%3a+Business+Value%2c+Planning+%2c+and+Enterprise+Roadmap+(paperback)_2139006">
+                <img src="/ShowCover.aspx?isbn=0133762904&type=e" alt="Service-Oriented Architecture (SOA) Compass: Business Value, Planning , and Enterprise Roadmap (paperback)" class="product" />
+            </a>
+            <a href="/store/service-oriented-architecture-soa-compass-business-9780133762907" class="title">
+                Service-Oriented Architecture (SOA) Compass: Business Value, Planning , and Enterprise Roadmap (paperback)
+            </a>
+        </dt>
+        <dd class="meta">By <a href="/authors/bio.aspx?a=bce6c6e3-add8-4239-8ad8-af5d2d15316b">Norbert Bieberstein</a>, <a href="/authors/bio.aspx?a=e3fbd978-831c-4ae0-9aef-0ce1dd4e5987">Sanjay Bose</a>, <a href="/authors/bio.aspx?a=b6273379-a14b-4cd7-bbb9-7ef0ed8a979a">Marc Fiammante</a>, <a href="/authors/bio.aspx?a=a7d7efab-0a28-437a-adbe-73d166507d70">Keith Jones</a>, <a href="/authors/bio.aspx?a=b82c2730-7e29-442a-884a-1114f24b54b9">Rawn Shah</a></dd>
+        <dd class="pricing">
+                <img src="/display/common/images/icons/product_16.png" alt="Physical Product" />
+            <a href="/store/service-oriented-architecture-soa-compass-business-9780133762907">$43.99</a>
+        </dd>
+    </dl>
+    <dl class="store">
+        <dt>
+                        <a href="/store/executable-specifications-with-scrum-a-practical-guide-9780321784131?w_ptgrevartcl=Executable+Specifications+with+Scrum%3a+A+Practical+Guide+to+Agile+Requirements+Discovery_1678896">
+                <img src="/ShowCover.aspx?isbn=0321784138&type=e" alt="Executable Specifications with Scrum: A Practical Guide to Agile Requirements Discovery" class="product" />
+            </a>
+            <a href="/store/executable-specifications-with-scrum-a-practical-guide-9780321784131" class="title">
+                Executable Specifications with Scrum: A Practical Guide to Agile Requirements Discovery
+            </a>
+        </dt>
+        <dd class="meta">By <a href="/authors/bio.aspx?a=b7af3ee3-f9f1-4616-b696-afbc5413174a">Mario Cardinal</a></dd>
+        <dd class="pricing">
+                <img src="/display/common/images/icons/product_16.png" alt="Physical Product" />
+            <a href="/store/executable-specifications-with-scrum-a-practical-guide-9780321784131">$27.99</a>
+        </dd>
+    </dl>
+    <p class="more">
+        <img src="/display/InformIT/images/icons/plus.png" alt="" />
+        <a href="/store/index.aspx?st=66384">See All Related Store Items</a>
+    </p>
+
+	</div>
+</div>
+        </div>
+        
+        
+    </div>
+</div><div id="header"><div class="cranium"><div class="branding"><div id="hLogo"><a href="/" accesskey="0" title="Home" class="logo"><!--[if lte IE 8]><img src="/display/informIT/images/header/informit.png" alt="InformIT" /><![endif]--></a></div><div class="tagline">the trusted technology learning source</div></div><div id="headerLinks" class="clearfix">
+                   
+    <div id="cartLink" class="headerLink c">
+        <span class="bighead ss-icon">&#xE500;</span>
+        <a href="https://memberservices.informit.com/cart/buy.aspx?partner=53">
+            <span class="bighead">View </span>Your Cart
+        </a>
+    </div>
+
+    <div class="hi">
+            <a href="https://memberservices.informit.com/my_account/login.aspx?partner=53">Account Sign In</a>
+    </div>
+
+              <form name="headersearchform" id="headersearchform" class="s" method="GET" action="/search/index.aspx"><label for="headersearchform">Search</label><input onfocus="checkClear(this,'Search');" type="text" name="query" id="query" value="Search" /><input type="submit" id="searchbutton" class="ss-icon" value="🔎" /></form></div></div></div><div id="siteNav"><div class="cranium clearfix"><ul id="nav"><li><a class="arrow" href="/topics/">Topics</a><ul class="column1 sib"><li><a href="/topics/topic.aspx?st=61443">Business &amp; Management</a></li><li><a href="/topics/topic.aspx?st=61444">Certification</a></li><li><a href="/topics/topic.aspx?st=98420">Cloud Computing &amp; Virtualization</a></li><li><a href="/topics/topic.aspx?st=61446">Data</a></li><li><a href="/topics/topic.aspx?st=61447">Engineering</a></li><li><a href="/topics/topic.aspx?st=61449">Graphics &amp; Web Design</a></li><li><a href="/topics/topic.aspx?st=61450">Hardware</a></li><li><a href="/topics/topic.aspx?st=61451">Home &amp; Office Computing</a></li><li><a href="/topics/topic.aspx?st=61452">Information Technology</a></li></ul><ul class="column2 sib"><li><a href="/topics/topic.aspx?st=98422">Mobile Application Development &amp; Programming</a></li><li><a href="/topics/topic.aspx?st=61453">Networking</a></li><li><a href="/topics/topic.aspx?st=66399">Open Source</a></li><li><a href="/topics/topic.aspx?st=61454">Operating Systems, Server</a></li><li><a href="/topics/topic.aspx?st=61455">Process Improvement</a></li><li><a href="/topics/topic.aspx?st=61456">Programming</a></li><li><a href="/topics/topic.aspx?st=61457">Security</a></li><li><a href="/topics/topic.aspx?st=61458">Software Development &amp; Management</a></li><li><a href="/topics/topic.aspx?st=61459">Web Development</a></li><li><a href="/topics/topic.aspx?st=61460">Web Services</a></li></ul></li><li><a class="arrow" href="/store/">Store</a><ul><li><a href="/store/browse/books">Books</a></li><li><a href="/store/browse/ebooks">eBooks</a></li><li><a href="/store/browse/practice-tests">Practice Tests</a></li><li><a href="/store/browse/software">Software</a></li><li><a href="/store/browse/video">Video</a></li></ul></li><li><a href="/authors/">Authors</a></li><li><a href="http://safari.informit.com/home?cid=my-201307-informit-topnav">Safari Books Online</a></li><li><a class="arrow" href="/imprint/">Imprints</a><ul class="imprints"><li><a href="/imprint/index.aspx?st=61085">Addison-Wesley Professional</a></li><li><a href="http://www.ciscopress.com">Cisco Press</a></li><li><a href="http://www.ibmpressbooks.com">IBM Press</a></li><li><a href="http://www.pearsonitcertification.com">Pearson IT Certification</a></li><li><a href="/imprint/index.aspx?st=61089">Prentice Hall Professional</a></li><li><a href="http://www.quepublishing.com">Que Publishing</a></li><li><a href="/imprint/index.aspx?st=61091">Sams Publishing</a></li><li><a href="http://www.pearsonitcertification.com/handlers/promotion/138356">VMware Press</a></li></ul></li><li><a class="arrow" href="/explore/">Explore</a><ul class="last"><li><a href="/about/">About</a></li><li><a href="/affiliates/">Affiliates</a></li><li><a href="/articles/">Articles</a></li><li><a href="/blogs/">Blogs</a></li><li><a href="/newsletters/">Newsletters</a></li><li><a href="/podcasts/">Podcasts</a></li><li><a href="/press/">Press</a></li><li><a href="/promotions/">Promotions</a></li><li><a href="/library/">Reference Library</a></li><li><a href="/user_groups/">User Groups</a></li></ul></li></ul></div></div><div id="footer"><ul class="links"><li><a href="/about/">About</a></li><li><a href="/affiliates/">Affiliates</a></li><li><a href="/about/contact_us/">Contact Us</a></li><li><a href="/about/jobs.aspx">Jobs</a></li><li><a href="/about/legal.aspx">Legal Notice</a></li><li><a href="/about/privacy.aspx">Privacy Policy</a></li><li><a href="/press/">Press</a></li><li><a href="/promotions/">Promotions</a></li><li><a href="/site_map/">Site Map</a></li><li><a href="/about/write_for_us.aspx">Write for Us</a></li></ul><div itemscope="itemscope" itemtype="http://schema.org/Corporation">
+					©  2014 Pearson Education, <span itemprop="name">Informit</span>. All rights reserved.<br /><div itemprop="address" itemscope="itemscope" itemtype="http://schema.org/PostalAddress"><span itemprop="streetAddress">800 East 96th Street</span>, <span itemprop="addressLocality">Indianapolis</span>, <span itemprop="addressRegion">Indiana </span><span itemprop="postalCode">46240</span></div></div></div><div id="strap"><div class="cranium"><div id="pearsonTopLogoLink"></div><div id="pearsonAlwaysLearningImage"></div></div></div><!--Google analytics--><script type="text/javascript">var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www."); document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));</script><script type="text/javascript">try {var pageTracker = _gat._getTracker("UA-433761-6"); pageTracker._setVar(""); pageTracker._trackPageview();} catch(err) {}</script><!--Webtrends--><script language="JavaScript" src="/display/InformIT/javascript/webtrends.js" type="text/javascript"></script><noscript><img alt="" border="0" name="DCSIMG" width="1" height="1" src="http://statse.webtrendslive.com/dcs1slwc200000cl8qmbbfxqx_5x2u/njs.gif?dcsuri=/nojavascript&amp;WT.js=No&amp;WT.tv=8.0.3" /></noscript><!--Disqus Comment Count--><script type="text/javascript">
+			var disqus_shortname = 'informit';
+			</script><script language="JavaScript" src="/display/common/javascript/disqus_count.js" type="text/JavaScript"></script><script language="JavaScript" src="/display/common/javascript/micronav.js" type="text/JavaScript"></script><script type="text/JavaScript">
+            setTimeout(function(){var a=document.createElement("script");
+            var b=document.getElementsByTagName("script")[0];
+            a.src=document.location.protocol+"//dnn506yrbagrg.cloudfront.net/pages/scripts/0018/4148.js?"+Math.floor(new Date().getTime()/3600000);
+            a.async=true;a.type="text/javascript";b.parentNode.insertBefore(a,b)}, 1);
+        </script></div></body></html>

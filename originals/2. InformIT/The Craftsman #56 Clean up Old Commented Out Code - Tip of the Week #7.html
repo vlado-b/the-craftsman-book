@@ -1,0 +1,463 @@
+
+
+
+<!DOCTYPE html><!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" xsl="http://www.w3.org/1999/XSL/Transform xmlns:fb="http://www.facebook.com/2008/fbml""><![endif]--><!--[if IE 7]><html class="no-js lt-ie9 lt-ie8" xsl="http://www.w3.org/1999/XSL/Transform xmlns:fb="http://www.facebook.com/2008/fbml""> <![endif]--><!--[if IE 8]><html class="no-js lt-ie9" xsl="http://www.w3.org/1999/XSL/Transform" xmlns:fb="http://www.facebook.com/2008/fbml"><![endif]--><!--[if gt IE 8]><!--><html class="no-js" xsl="http://www.w3.org/1999/XSL/Transform" xmlns:fb="http://www.facebook.com/2008/fbml"><!--<![endif]--><head><meta name="verify-v1" content="jKqgZt8qtZUt+IrazV2fydKUZG2KKR8QEUoYjH9tth4=" /><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" /><title>Robert C. Martin's Clean Code Tip of the Week #7: Clean up Old Commented Out Code |  | InformIT</title><link href="/display/common/css/commonAll.css?v=20131104" rel="stylesheet" type="text/css" /><link href="/display/common/css/commonFront.css?v=20131104" rel="stylesheet" type="text/css" /><link href="/display/common/css/jquery-ui-custom.css?v=20131104" rel="stylesheet" type="text/css" /><link href="/display/InformIT/css/style.css?v=20131104" rel="stylesheet" type="text/css" /><link rel="apple-touch-icon-precomposed" sizes="144x144" href="/display/InformIT/images/objects/touch_icons/apple-touch-icon-144x144-precomposed.png" /><link rel="apple-touch-icon-precomposed" sizes="114x114" href="/display/InformIT/images/objects/touch_icons/apple-touch-icon-114x114-precomposed.png" /><link rel="apple-touch-icon-precomposed" sizes="72x72" href="/display/InformIT/images/objects/touch_icons/apple-touch-icon-72x72-precomposed.png" /><link rel="apple-touch-icon-precomposed" href="/display/InformIT/images/objects/touch_icons/apple-touch-icon-precomposed.png" /><script language="JavaScript" src="/display/common/javascript/modernizr.custom.js?v=20131104" type="text/javascript"></script><script language="JavaScript" src="/display/common/javascript/jquery.js?v=20131104" type="text/JavaScript"></script><script language="JavaScript" src="/display/common/javascript/global.js?v=20131104" type="text/JavaScript"></script><!--[if lte IE 8]><script language="JavaScript" src="/display/common/javascript/respond.min.js" type="text/JavaScript"></script><![endif]--><script language="JavaScript" src="/display/common/javascript/swfobject.js" type="text/JavaScript"></script><script language="JavaScript" src="/display/common/javascript/jquery-ui-1.10.2.custom.min.js" type="text/JavaScript"></script><script language="JavaScript" src="/display/common/javascript/fastclick.min.js" type="text/JavaScript"></script><link rel="canonical" href="http://www.informit.com/articles/article.aspx?p=1334908" />
+      
+      
+    
+        <meta name="pageType" content="Articles and Sample Chapters" />
+      <meta name="publishedDate" content="Mar 30, 2009" />
+        <meta name="description" content="Robert C. Martin explains why old commented-out code is an abomination.  " />
+      
+        
+        
+    <link rel="shortcut icon" href="/display/InformIT/images/objects/favicon.ico?v=20131104" />
+        <meta name="WT.si_n" content="Site_Funnel"/>
+<meta name="WT.si_p" content="Article"/>
+<meta name="DCSext.w_ptgarctlnm" content="Robert C. Martin's Clean Code Tip of the Week #7: Clean up Old Commented Out Code"/>
+<meta name="DCSext.w_ptgarctlpg" content="1_"/>
+<meta name="WT.ad" content="Home > Articles > Programming > Windows Programming"/>
+
+      </head><body class=""><div class="wrapper">
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(document).bind('click', function (e) {
+            var $clicked = $(e.target);
+            if ($clicked.is('#articleTOC') || $clicked.parents().is('#articleTOC')) {
+                $('#articleTOCList').show();
+            }
+            else {
+                hideTOC();
+            }
+        });
+    });
+
+    function hideTOC() {
+        $('#articleTOCList').hide();
+    }
+</script>
+
+<div id="content" class="articleProduct">
+    <div id="columnOne">
+<p class="crumb">
+            <a href="/index.aspx">Home</a>
+            &gt;
+            <a href="/articles/index.aspx">Articles</a>
+            &gt;
+            <a href="/articles/index.aspx?st=60206">Programming</a>
+            &gt;
+            <a href="/articles/index.aspx?st=60220">Windows Programming</a>
+</p>
+        <div id="articleContent" class="clearfix">
+            <div id="articleHeader" class="sectionHeader">
+                    <h1>Robert C. Martin&#39;s Clean Code Tip of the Week #7: Clean up Old Commented Out Code</h1>
+                <a rel="author" href="/authors/bio.aspx?a=361a5e70-f1e2-432b-9928-b30b4742ae80"><img src="http://ptgmedia.pearsoncmg.com/authors/m/martin_robert_c/martin_robert_c_e.jpg" alt="Robert C. Martin" class="author" /></a>                <ul>
+                        <li class="authorName"> By <a rel="author" href="/authors/bio.aspx?a=361a5e70-f1e2-432b-9928-b30b4742ae80">Robert C. Martin</a></li>
+                    <li>Mar 30, 2009</li>
+                </ul>
+            </div>
+            <div class="articleTools">
+                <div class="articleInteraction">
+                    <ul>
+                        <li>
+                            <a href="/articles/printerfriendly.aspx?p=1334908" title="Print"><img src="/display/InformIT/images/icons/print_16.png" alt="Print" /></a> <a href="/articles/printerfriendly.aspx?p=1334908" title="Print"><span>Print</span></a>
+                        </li>
+                        <li>
+
+<script type="text/javascript">
+    addthis_pub = 'informit';
+    addthis_logo = 'http://www.informit.com/display/InformIT/images/header/informit.png';
+    addthis_logo_background = '596770';
+    addthis_logo_color = '596770';
+    addthis_brand = 'informIT';
+    addthis_options = 'email, delicious, digg, facebook, google, newsvine, reddit, slashdot, stumbleupon, technorati, twitter, more';
+</script>
+<a href="http://www.addthis.com/bookmark.php" onmouseover="return addthis_open(this, '', '[URL]', '[TITLE]')" onmouseout="addthis_close()" onclick="return addthis_sendto()"><img src="/display/InformIT/images/icons/share_16.png" width="16" height="16" border="0" alt="Share This" /></a><a href="http://www.addthis.com/bookmark.php" onmouseover="return addthis_open(this, '', '[URL]', '[TITLE]')" onmouseout="addthis_close()" onclick="return addthis_sendto()"><span>Share This</span></a>
+<script type="text/javascript" src="http://s7.addthis.com/js/152/addthis_widget.js"></script>
+                        </li>
+                        <li class="last">
+                                <a href="#articleDiscussion" title="Discuss"><img src="/display/InformIT/images/icons/discuss_16.png" alt="Discuss" /></a><a href="#articleDiscussion" title="Discuss"><span>Discuss</span></a>
+                        </li>
+                    </ul>
+                </div>
+                    <div class="pagination">
+        <span class="paginationLocation"><strong>Page 1</strong> of 1</span>
+    </div>
+
+            </div>
+            <div id="articleText">
+                    <div class="relatedBook">
+                        <div class="header graydient">
+                            <h3>From the author of</h3>
+                        </div>
+                        <div class="productArea graydient clearfix">
+                            <a href="/store/clean-code-a-handbook-of-agile-software-craftsmanship-9780132350884?w_ptgrevartcl=Robert+C.+Martin%27s+Clean+Code+Tip+of+the+Week+%237%3a+Clean+up+Old+Commented+Out+Code_1334908"><img src="/ShowCover.aspx?isbn=9780132350884&amp;type=d" alt="Clean Code: A Handbook of Agile Software Craftsmanship" class="product" /></a><a href="/store/clean-code-a-handbook-of-agile-software-craftsmanship-9780132350884?w_ptgrevartcl=Robert+C.+Martin%27s+Clean+Code+Tip+of+the+Week+%237%3a+Clean+up+Old+Commented+Out+Code_1334908" class="title">Clean Code: A Handbook of Agile Software Craftsmanship</a>
+                            <br />
+                            <br />
+                            <a href="/store/clean-code-a-handbook-of-agile-software-craftsmanship-9780132350884?w_ptgrevartcl=Robert+C.+Martin%27s+Clean+Code+Tip+of+the+Week+%237%3a+Clean+up+Old+Commented+Out+Code_1334908" class="button">Learn More</a>
+                                <a href="/buy.aspx?isbn=9780132350884&w_ptgrevartcl=Robert+C.+Martin%27s+Clean+Code+Tip+of+the+Week+%237%3a+Clean+up+Old+Commented+Out+Code_1334908" class="buy button"><span class="ss-icon">&#xE500;</span>Buy</a>
+                        </div>
+                    </div>
+                                    <div id="articleLongDescription">We join "The Craftsman," Robert C. Martin's series on an interstellar spacecraft where programmers hone their coding skills. In this seventh tip in the series, the crewmen reflect on why old commented-out code is an abomination.  </div>
+                    <div id="articleDescription"><p><strong>You can review additional articles from Robert C. Martin's series, "The Craftsman," on the <a href="http://www.objectmentor.com/resources/publishedArticles.html">ObjectMentor website</a>.</strong></p></div>
+                <hr />
+<p><em>May
+20, 1945, 22:23:00 GMT</em></p>
+<p><em>The
+war cabinet stared again and again at the aerial photographs that littered the
+conference table.  &#8220;Well, that pretty much settles that; doesn&#8217;t
+it?&#8221; Said General MacArthur.  </em></p>
+<p><em>&#8220;Yes
+it does,&#8221; said Rear Admiral Souers, Chief of the newly formed Office of
+Intelligence.  &#8220;Europe is dead, and Asia is dying.&#8221;  </em></p>
+
+<p><em>&#8220;I
+wouldn&#8217;t have believed it.&#8221; Said Hoover, &#8220;But a few of our
+agents have reported in from Paris, and Berlin, and they confirm the assessment.
+Losses in Europe appear to be 70%; and Asia may go higher than
+that.&#8221;</em></p>
+<p><em>President
+Wallace shook his head in amazement.  &#8220;Terrible.&#8221; He said. 
+&#8220;Just terrible.  And yet I can&#8217;t deny that there&#8217;s a certain
+justice in all of this.&#8221;</em></p>
+<p><em>Patton
+yanked the cigar out of his mouth and said: &#8220;It would have been justice if
+we&#8217;d been the ones who&#8217;d done it.  But these nincompoops did it to
+themselves.  That&#8217;s not justice, that&#8217;s just
+incompetence.&#8221;</em></p>
+
+<p><em>&#8220;Do
+we know for sure what happened?&#8221; asked Wallace.</em></p>
+<p><em>&#8220;Not
+really.&#8221; Said Souers.  &#8220;All we know is that they started contracting
+the Anthrax about a week before we did.&#8221;</em></p>
+<p><em>Patton
+growled: &#8220;I wager the Nazis had huge stockpiles of the stuff to use
+against us, and against the Japs and Bolsheviks too; once it suited their
+purpose.&#8221;</em></p>
+<p><em>&#8220;We
+may never know how it all got loose.&#8221; Said MacArthur.  &#8220;But one
+thing&#8217;s certain.&#8221;</em></p>
+
+<p><em>&#8220;Yes.&#8221;
+Said President Wallace.  &#8220;It&#8217;s just us against Clyde now.&#8221;
+</em></p>
+
+<hr />
+<p><em>Tues, 13 Mar 2002,
+09:00</em></p>
+<p>I was working
+quietly at my screen when I noticed Jean stand up and scan the room.  She saw me
+and beamed. &#8220;Alphonse dear, would you please come here.  I&#8217;ve got
+something I&#8217;d like you to see.&#8221;  </p>
+<p>That meant I was
+in trouble.  I stood up and sauntered over to her workstation.  Out of the
+corner of my eye I saw Avery flash me a snickering grin.  He was enjoying this. 
+</p>
+
+<p>&#8220;Sit down
+right here, dear.&#8221; Jean said as I approached her desk.  She indicated to
+the seat next to her.  So I sat down and she sat down along side. </p>
+<p>&#8220;Now then,
+dear, would you please look at this screen?&#8221;</p>
+<p>&#8220;Uh,
+sure.&#8221;  I looked at her pad, and saw the following code:</p>
+
+<pre>	protected void log(String message, int priority) {
+      if (project != null) {
+        project.log(message, priority);
+      }
+//      else {
+//        System.out.println(msg);
+//      }
+    }
+    </pre>
+    <p>I&#8217;d
+written this code yesterday.  So I knew I was in trouble for sure.  &#8220;I
+wrote this yesterday Jean.  Jerry asked me to get rid of the messages that were
+printing on the console after the project had been closed.&#8221;</p>
+
+<p>&#8220;Yes,
+dear, I can see that.  I can also see that instead of deleting the code, you
+simply commented it out.&#8221;</p>
+<p>&#8220;Uh,
+right, I thought someone might change their mind and want those messages printed
+again.&#8221;</p>
+<p>Jean smiled
+warmly at me and said: &#8220;I see.  But dear Alphonse, you do know that we Mr.
+C. Doesn&#8217;t care for commented out code, don&#8217;t
+you?&#8221;</p>
+<p>Oh, oh. 
+I&#8217;d forgotten that rule.  &#8220;Oh, yeah, I forgot about that. 
+I&#8217;ll go delete it.&#8221;  But as a started to stand, Jean simply smiled
+me back into my seat. </p>
+<p>&#8220;Don&#8217;t
+run off just yet, dear; we should talk about this for a minute.  Why did you
+leave that code commented out like that?&#8221;</p>
+
+<p>I remembered
+Avery and Jean in the woodshed, and wondered if this was going to be like that.
+&#8220;Well, like I said, I thought someone might change their mind and want
+that message put back in.&#8221;</p>
+<p>&#8220;And did
+you think that whoever would have to put it back in would not know how to call
+<tt><strong>System.out.println</strong></tt>?&#8221;</p>
+<p>&#8220;Uh.&#8221;&#8220;Please
+don&#8217;t stammer dear.&#8221;</p>
+<p>&#8220;Uh... 
+Sorry.&#8221;</p>
+<p>&#8220;So did
+you, dear?&#8221;</p>
+<p>I had to
+backtrack the conversation to make sense of the question.  &#8220;N...no, I just
+thought it would be more convenient for them if I left the code in there.  All
+they&#8217;d have to do is uncomment it.&#8221;</p>
+
+<p>&#8220;Yes,
+dear, but if that&#8217;s why you left that commented code in there, then why
+didn&#8217;t you put other convenient commented code in there?  After all, dear,
+someone might want that message written to a text file.  You could have written
+that code and commented it out so that it would be convenient for
+them.&#8221;</p>
+<p>&#8220;Well,
+I...&#8221;</p>
+<p>&#8220;And what
+if someone wanted the message converted into HTML and displayed in a drop down
+box that blinked the message and then faded it out?  You could have put that
+code in there too and then commented it out for convenience.&#8221;</p>
+<p>&#8220;Jean,
+I...&#8221;</p>
+<p>&#8220;Oh, dear,
+I&#8217;m just pulling your leg a little.  But I hope you get my point.  Leaving
+code commented out for convenience is really quite silly.  There&#8217;s just so
+much code that would be convenient to have lying around that we&#8217;d soon
+fill our programs with commented out code.&#8221;</p>
+<p>&#8220;I
+understand, Jean, I&#8217;ll be more careful next time.&#8221;</p>
+
+<p>&#8220;I&#8217;m
+sure you will, Alphonse dear.  But before you go, can you tell me why the
+<strong><tt>message</tt></strong>
+variable has a different name in the commented out code?&#8221;</p>
+<p>I looked back
+and the screen.  Sure enough, the commented out section used
+<strong><tt>msg</tt></strong>
+instead of
+<strong><tt>message</tt></strong>.</p>
+<p>&#8220;Oh, yeah,
+I, uh.. I refactored the code a bit after I made the change.  I thought
+<strong><tt>message</tt></strong>
+was a better name than
+
+<strong><tt>msg</tt></strong>.&#8221;</p>
+<p>&#8220;I quite
+agree with you dear, yes I do.  But when you made that change you didn&#8217;t
+make it in the commented out code did you?&#8221;</p>
+<p>&#8220;No, I
+uh.. forgot.&#8221;</p>
+<p>&#8220;Yes, you
+did.  And so how convenient would that be for someone who wanted to uncomment it
+later?&#8221;</p>
+<p>&#8220;Yeah, I
+guess they&#8217;d have a little trouble until they figured out that the name
+had changed.&#8221;</p>
+<p>&#8220;So it
+wasn&#8217;t really very convenient at all, was it Alphonse.&#8221;</p>
+<p>Jasmine chose
+that minute to stroll by.  As she turned to flash me a grin, her raven hair
+rippled and danced around her face.  &#8220;Hey there hotshot, I hear you left
+some code commented out.&#8221;  </p>
+
+<p>&#8220;Jasimine
+dear, you mind your own business now.&#8221; Jean scolded.</p>
+<p>Jasmine
+snickered but never broke her stride.  She disappeared around the
+corner.</p>
+<p>&#8220;My but
+she&#8217;s a feisty young lady.&#8221; Jean said to the air.  &#8220;But
+she&#8217;s a very good programmer.&#8221;</p>
+<p>I waited, not
+knowing what to do.  Jean stared contemplatively after Jasmine for a few seconds
+more, and then turned back to me.   </p>
+<p>&#8220;That&#8217;s all Alphonse dear, you can go back to
+what you were working on now.&#8221;</p>
+
+<p>&#8220;Thank you
+Jean.&#8221; I said as I stood.  Then I walked back to my desk and sat back
+down.  </p>
+<p><strong>That was Hysterical!! ROTFL.</strong> Avery IMed me.</p>
+<p>I turned around
+and rolled my eyes at him.  Then I turned back and brought Mr. C&#8217;s rules
+up on my pad.</p>
+<div class="sidebar">
+<p class="title">C5: Commented-Out Code</p>
+<p>It makes me crazy to see stretches of code that are commented out.  Who knows how
+old it is?  Who knows whether or not it&#8217;s meaningful?  Yet no one will
+delete it because everyone assumes someone else needs it or has plans for
+it.</p>
+
+<p>That code sits there and rots, getting less and less relevant with every passing day.
+It calls functions that no longer exist.  It uses variables whose names have
+changed.  It follows conventions that are long obsolete.  It pollutes the
+modules that contain it and distracts the people who try to read it. 
+Commented-out code is an <em>abomination</em>.</p>
+<p>When you see commented-out code, <em>delete
+it</em>!  Don&#8217;t worry; the
+source code control system still remembers it.  If anyone really needs it, he or
+she can go back and check out a previous version.  Don&#8217;t suffer
+commented-out code to survive.</p>
+</div>
+
+
+
+            </div>
+            <div class="articleToolsSecond">
+                    <div class="pagination">
+        <span class="paginationLocation"><strong>Page 1</strong> of 1</span>
+    </div>
+
+                <div class="articleInteraction">
+                    <ul>
+                        <li>
+
+<script type="text/javascript">
+    addthis_pub = 'informit';
+    addthis_logo = 'http://www.informit.com/display/InformIT/images/header/informit.png';
+    addthis_logo_background = '596770';
+    addthis_logo_color = '596770';
+    addthis_brand = 'informIT';
+    addthis_options = 'email, delicious, digg, facebook, google, newsvine, reddit, slashdot, stumbleupon, technorati, twitter, more';
+</script>
+<a href="http://www.addthis.com/bookmark.php" onmouseover="return addthis_open(this, '', '[URL]', '[TITLE]')" onmouseout="addthis_close()" onclick="return addthis_sendto()"><img src="/display/InformIT/images/icons/share_16.png" width="16" height="16" border="0" alt="Share This" /></a><a href="http://www.addthis.com/bookmark.php" onmouseover="return addthis_open(this, '', '[URL]', '[TITLE]')" onmouseout="addthis_close()" onclick="return addthis_sendto()"><span>Share This</span></a>
+<script type="text/javascript" src="http://s7.addthis.com/js/152/addthis_widget.js"></script>
+                        </li>
+                        <li class="last">
+                            <a href="#" onclick="openBrWindow('/my_account/addTo.aspx?p=52da8fa0-1698-4721-bcf7-3c895218c0b4&e=529ab914-04bf-4414-b006-af5de2a66de0&t=a','addMyAccount','scrollbars=no,resizable=yes,width=300,height=200');return false;" title="Your Account"><img class="save" alt="" src="/display/InformIT/images/icons/save_16.png" /></a><a href="#" onclick="openBrWindow('/my_account/addTo.aspx?p=52da8fa0-1698-4721-bcf7-3c895218c0b4&e=529ab914-04bf-4414-b006-af5de2a66de0&t=a','addMyAccount','scrollbars=no,resizable=yes,width=300,height=200');return false;">Save To Your Account</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+            <div class="relatedBookBottom graydient clearfix">
+                <a href="/store/clean-code-a-handbook-of-agile-software-craftsmanship-9780132350884?w_ptgrevartcl=Robert+C.+Martin%27s+Clean+Code+Tip+of+the+Week+%237%3a+Clean+up+Old+Commented+Out+Code_1334908"><img src="/ShowCover.aspx?isbn=9780132350884&amp;type=e" alt="Clean Code: A Handbook of Agile Software Craftsmanship" class="product" /></a>
+                <h4>From the author of</h4>
+                <p>
+                    <a href="/store/clean-code-a-handbook-of-agile-software-craftsmanship-9780132350884?w_ptgrevartcl=Robert+C.+Martin%27s+Clean+Code+Tip+of+the+Week+%237%3a+Clean+up+Old+Commented+Out+Code_1334908" class="title">Clean Code: A Handbook of Agile Software Craftsmanship</a>
+                </p>
+                <div class="buttons">
+                    <a href="/store/clean-code-a-handbook-of-agile-software-craftsmanship-9780132350884?w_ptgrevartcl=Robert+C.+Martin%27s+Clean+Code+Tip+of+the+Week+%237%3a+Clean+up+Old+Commented+Out+Code_1334908" class="button">Learn More</a>
+                        <a href="/buy.aspx?isbn=9780132350884&w_ptgrevartcl=Robert+C.+Martin%27s+Clean+Code+Tip+of+the+Week+%237%3a+Clean+up+Old+Commented+Out+Code_1334908" class="buy button"><span class="ss-icon">&#xE500;</span>Buy</a>
+                </div>
+            </div>
+                    <div id="articleDiscussion" class="clearfix">
+                <h3 class="sectionHeader">Discussions</h3>
+<script type="text/javascript">
+    var disqus_identifier = '83231a97-7cbd-40c5-9f78-dd2d43b18bae';
+    var discussionEnv = 'informit';
+    var disqus_skip_auth = true;
+    
+</script>
+<div id="disqus_thread"></div>
+<script language="JavaScript" src="/display/common/javascript/disqus.js" type="text/JavaScript"></script>
+<noscript>
+    Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript=informit">comments powered by Disqus.</a>
+</noscript>
+<a href="http://disqus.com" class="dsq-brlink">
+    comments powered by <span class="logo-disqus">Disqus</span>
+</a>
+            </div>
+    </div>
+    <div id="columnTwo">
+        <div>
+<div id="promotions" class="tabwidget prop">
+	<h4>Related Resources</h4>
+	<ul class="tabs">
+		<li><a href="#" onclick="tabWidget(1,'promotions'); loadWidget('promotions', 0, '/Related/Podcasts/675186?stateIntId=60220'); return false;">Podcasts</a></li>
+		<li><a href="#" onclick="tabWidget(2,'promotions'); loadWidget('promotions', 1, '/Related/Blogs/675186?stateIntId=60220'); return false;">Blogs</a></li>
+		<li><a href="#" onclick="tabWidget(3,'promotions'); loadWidget('promotions', 2, '/Related/Articles/1334908?stateIntId=60220'); return false;">Articles</a></li>
+		<li class="selected"><a href="#" onclick="tabWidget(4,'promotions'); return false;">Store</a></li>
+	</ul>
+	<div class="container"></div>
+	<div class="container"></div>
+	<div class="container"></div>
+	<div class="container on">
+
+    <dl class="store">
+        <dt>
+                        <a href="/store/being-agile-eleven-breakthrough-techniques-to-keep-9780133375626?w_ptgrevartcl=Being+Agile%3a+Eleven+Breakthrough+Techniques+to+Keep+You+from+%22Waterfalling+Backward%22_1966390">
+                <img src="/ShowCover.aspx?isbn=0133375625&type=e" alt="Being Agile: Eleven Breakthrough Techniques to Keep You from &quot;Waterfalling Backward&quot;" class="product" />
+            </a>
+            <a href="/store/being-agile-eleven-breakthrough-techniques-to-keep-9780133375626" class="title">
+                Being Agile: Eleven Breakthrough Techniques to Keep You from &quot;Waterfalling Backward&quot;
+            </a>
+        </dt>
+        <dd class="meta">By <a href="/authors/bio.aspx?a=c2907033-71c5-4606-84bc-c4ea7efcc763">Leslie Ekas</a>, <a href="/authors/bio.aspx?a=b3292755-a05c-46a5-8d35-2b86525cb22e">Scott Will</a></dd>
+        <dd class="pricing">
+                <img src="/display/common/images/icons/product_16.png" alt="Physical Product" />
+            <a href="/store/being-agile-eleven-breakthrough-techniques-to-keep-9780133375626">$27.99</a>
+        </dd>
+    </dl>
+    <dl class="store">
+        <dt>
+                        <a href="/store/service-oriented-architecture-soa-compass-business-9780133762907?w_ptgrevartcl=Service-Oriented+Architecture+(SOA)+Compass%3a+Business+Value%2c+Planning+%2c+and+Enterprise+Roadmap+(paperback)_2139006">
+                <img src="/ShowCover.aspx?isbn=0133762904&type=e" alt="Service-Oriented Architecture (SOA) Compass: Business Value, Planning , and Enterprise Roadmap (paperback)" class="product" />
+            </a>
+            <a href="/store/service-oriented-architecture-soa-compass-business-9780133762907" class="title">
+                Service-Oriented Architecture (SOA) Compass: Business Value, Planning , and Enterprise Roadmap (paperback)
+            </a>
+        </dt>
+        <dd class="meta">By <a href="/authors/bio.aspx?a=bce6c6e3-add8-4239-8ad8-af5d2d15316b">Norbert Bieberstein</a>, <a href="/authors/bio.aspx?a=e3fbd978-831c-4ae0-9aef-0ce1dd4e5987">Sanjay Bose</a>, <a href="/authors/bio.aspx?a=b6273379-a14b-4cd7-bbb9-7ef0ed8a979a">Marc Fiammante</a>, <a href="/authors/bio.aspx?a=a7d7efab-0a28-437a-adbe-73d166507d70">Keith Jones</a>, <a href="/authors/bio.aspx?a=b82c2730-7e29-442a-884a-1114f24b54b9">Rawn Shah</a></dd>
+        <dd class="pricing">
+                <img src="/display/common/images/icons/product_16.png" alt="Physical Product" />
+            <a href="/store/service-oriented-architecture-soa-compass-business-9780133762907">$43.99</a>
+        </dd>
+    </dl>
+    <dl class="store">
+        <dt>
+                        <a href="/store/executable-specifications-with-scrum-a-practical-guide-9780321784131?w_ptgrevartcl=Executable+Specifications+with+Scrum%3a+A+Practical+Guide+to+Agile+Requirements+Discovery_1678896">
+                <img src="/ShowCover.aspx?isbn=0321784138&type=e" alt="Executable Specifications with Scrum: A Practical Guide to Agile Requirements Discovery" class="product" />
+            </a>
+            <a href="/store/executable-specifications-with-scrum-a-practical-guide-9780321784131" class="title">
+                Executable Specifications with Scrum: A Practical Guide to Agile Requirements Discovery
+            </a>
+        </dt>
+        <dd class="meta">By <a href="/authors/bio.aspx?a=b7af3ee3-f9f1-4616-b696-afbc5413174a">Mario Cardinal</a></dd>
+        <dd class="pricing">
+                <img src="/display/common/images/icons/product_16.png" alt="Physical Product" />
+            <a href="/store/executable-specifications-with-scrum-a-practical-guide-9780321784131">$27.99</a>
+        </dd>
+    </dl>
+    <p class="more">
+        <img src="/display/InformIT/images/icons/plus.png" alt="" />
+        <a href="/store/index.aspx?st=60220">See All Related Store Items</a>
+    </p>
+
+	</div>
+</div>
+        </div>
+        
+        
+    </div>
+</div><div id="header"><div class="cranium"><div class="branding"><div id="hLogo"><a href="/" accesskey="0" title="Home" class="logo"><!--[if lte IE 8]><img src="/display/informIT/images/header/informit.png" alt="InformIT" /><![endif]--></a></div><div class="tagline">the trusted technology learning source</div></div><div id="headerLinks" class="clearfix">
+                   
+    <div id="cartLink" class="headerLink c">
+        <span class="bighead ss-icon">&#xE500;</span>
+        <a href="https://memberservices.informit.com/cart/buy.aspx?partner=53">
+            <span class="bighead">View </span>Your Cart
+        </a>
+    </div>
+
+    <div class="hi">
+            <a href="https://memberservices.informit.com/my_account/login.aspx?partner=53">Account Sign In</a>
+    </div>
+
+              <form name="headersearchform" id="headersearchform" class="s" method="GET" action="/search/index.aspx"><label for="headersearchform">Search</label><input onfocus="checkClear(this,'Search');" type="text" name="query" id="query" value="Search" /><input type="submit" id="searchbutton" class="ss-icon" value="🔎" /></form></div></div></div><div id="siteNav"><div class="cranium clearfix"><ul id="nav"><li><a class="arrow" href="/topics/">Topics</a><ul class="column1 sib"><li><a href="/topics/topic.aspx?st=61443">Business &amp; Management</a></li><li><a href="/topics/topic.aspx?st=61444">Certification</a></li><li><a href="/topics/topic.aspx?st=98420">Cloud Computing &amp; Virtualization</a></li><li><a href="/topics/topic.aspx?st=61446">Data</a></li><li><a href="/topics/topic.aspx?st=61447">Engineering</a></li><li><a href="/topics/topic.aspx?st=61449">Graphics &amp; Web Design</a></li><li><a href="/topics/topic.aspx?st=61450">Hardware</a></li><li><a href="/topics/topic.aspx?st=61451">Home &amp; Office Computing</a></li><li><a href="/topics/topic.aspx?st=61452">Information Technology</a></li></ul><ul class="column2 sib"><li><a href="/topics/topic.aspx?st=98422">Mobile Application Development &amp; Programming</a></li><li><a href="/topics/topic.aspx?st=61453">Networking</a></li><li><a href="/topics/topic.aspx?st=66399">Open Source</a></li><li><a href="/topics/topic.aspx?st=61454">Operating Systems, Server</a></li><li><a href="/topics/topic.aspx?st=61455">Process Improvement</a></li><li><a href="/topics/topic.aspx?st=61456">Programming</a></li><li><a href="/topics/topic.aspx?st=61457">Security</a></li><li><a href="/topics/topic.aspx?st=61458">Software Development &amp; Management</a></li><li><a href="/topics/topic.aspx?st=61459">Web Development</a></li><li><a href="/topics/topic.aspx?st=61460">Web Services</a></li></ul></li><li><a class="arrow" href="/store/">Store</a><ul><li><a href="/store/browse/books">Books</a></li><li><a href="/store/browse/ebooks">eBooks</a></li><li><a href="/store/browse/practice-tests">Practice Tests</a></li><li><a href="/store/browse/software">Software</a></li><li><a href="/store/browse/video">Video</a></li></ul></li><li><a href="/authors/">Authors</a></li><li><a href="http://safari.informit.com/home?cid=my-201307-informit-topnav">Safari Books Online</a></li><li><a class="arrow" href="/imprint/">Imprints</a><ul class="imprints"><li><a href="/imprint/index.aspx?st=61085">Addison-Wesley Professional</a></li><li><a href="http://www.ciscopress.com">Cisco Press</a></li><li><a href="http://www.ibmpressbooks.com">IBM Press</a></li><li><a href="http://www.pearsonitcertification.com">Pearson IT Certification</a></li><li><a href="/imprint/index.aspx?st=61089">Prentice Hall Professional</a></li><li><a href="http://www.quepublishing.com">Que Publishing</a></li><li><a href="/imprint/index.aspx?st=61091">Sams Publishing</a></li><li><a href="http://www.pearsonitcertification.com/handlers/promotion/138356">VMware Press</a></li></ul></li><li><a class="arrow" href="/explore/">Explore</a><ul class="last"><li><a href="/about/">About</a></li><li><a href="/affiliates/">Affiliates</a></li><li><a href="/articles/">Articles</a></li><li><a href="/blogs/">Blogs</a></li><li><a href="/newsletters/">Newsletters</a></li><li><a href="/podcasts/">Podcasts</a></li><li><a href="/press/">Press</a></li><li><a href="/promotions/">Promotions</a></li><li><a href="/library/">Reference Library</a></li><li><a href="/user_groups/">User Groups</a></li></ul></li></ul></div></div><div id="footer"><ul class="links"><li><a href="/about/">About</a></li><li><a href="/affiliates/">Affiliates</a></li><li><a href="/about/contact_us/">Contact Us</a></li><li><a href="/about/jobs.aspx">Jobs</a></li><li><a href="/about/legal.aspx">Legal Notice</a></li><li><a href="/about/privacy.aspx">Privacy Policy</a></li><li><a href="/press/">Press</a></li><li><a href="/promotions/">Promotions</a></li><li><a href="/site_map/">Site Map</a></li><li><a href="/about/write_for_us.aspx">Write for Us</a></li></ul><div itemscope="itemscope" itemtype="http://schema.org/Corporation">
+					©  2014 Pearson Education, <span itemprop="name">Informit</span>. All rights reserved.<br /><div itemprop="address" itemscope="itemscope" itemtype="http://schema.org/PostalAddress"><span itemprop="streetAddress">800 East 96th Street</span>, <span itemprop="addressLocality">Indianapolis</span>, <span itemprop="addressRegion">Indiana </span><span itemprop="postalCode">46240</span></div></div></div><div id="strap"><div class="cranium"><div id="pearsonTopLogoLink"></div><div id="pearsonAlwaysLearningImage"></div></div></div><!--Google analytics--><script type="text/javascript">var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www."); document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));</script><script type="text/javascript">try {var pageTracker = _gat._getTracker("UA-433761-6"); pageTracker._setVar(""); pageTracker._trackPageview();} catch(err) {}</script><!--Webtrends--><script language="JavaScript" src="/display/InformIT/javascript/webtrends.js" type="text/javascript"></script><noscript><img alt="" border="0" name="DCSIMG" width="1" height="1" src="http://statse.webtrendslive.com/dcs1slwc200000cl8qmbbfxqx_5x2u/njs.gif?dcsuri=/nojavascript&amp;WT.js=No&amp;WT.tv=8.0.3" /></noscript><!--Disqus Comment Count--><script type="text/javascript">
+			var disqus_shortname = 'informit';
+			</script><script language="JavaScript" src="/display/common/javascript/disqus_count.js" type="text/JavaScript"></script><script language="JavaScript" src="/display/common/javascript/micronav.js" type="text/JavaScript"></script><script type="text/JavaScript">
+            setTimeout(function(){var a=document.createElement("script");
+            var b=document.getElementsByTagName("script")[0];
+            a.src=document.location.protocol+"//dnn506yrbagrg.cloudfront.net/pages/scripts/0018/4148.js?"+Math.floor(new Date().getTime()/3600000);
+            a.async=true;a.type="text/javascript";b.parentNode.insertBefore(a,b)}, 1);
+        </script></div></body></html>
